@@ -1,7 +1,6 @@
 package com.stats.tracker.be.datalayer.wrc.entities.surface;
 
 import com.stats.tracker.be.datalayer.wrc.entities.AbstractEntity;
-import xxx.joker.libs.core.lambdas.JkStreams;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,9 +12,9 @@ public class WrcSurface extends AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long surfaceId;
+    private long id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<WrcGroundMix> groundMixList = new ArrayList<>();
 
 
@@ -23,8 +22,8 @@ public class WrcSurface extends AbstractEntity implements Serializable {
 
     }
 
-    public long getSurfaceId() {
-        return surfaceId;
+    public long getId() {
+        return id;
     }
 
     public List<WrcGroundMix> getGroundMixList() {

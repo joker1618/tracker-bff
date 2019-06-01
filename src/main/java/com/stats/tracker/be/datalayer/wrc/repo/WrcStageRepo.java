@@ -13,10 +13,10 @@ import java.util.List;
 @Repository
 public interface WrcStageRepo extends JpaRepository<WrcStage, Long> {
 
-    @Query(value = "select c from WrcStage c where LOWER(c.countryObj.country) = LOWER(:country) and  c.numInRally = :numInRally")
+    @Query(value = "select c from WrcStage c where LOWER(c.country.name) = LOWER(:country) and  c.numInRally = :numInRally")
     WrcStage getStage(@Param("country") String country, @Param("numInRally") int numInRally);
 
-    @Query(value = "select c from WrcStage c where LOWER(c.countryObj.country) = LOWER(:country)")
+    @Query(value = "select c from WrcStage c where LOWER(c.country.name) = LOWER(:country)")
     List<WrcStage> getStages(@Param("country") String country);
 
 }

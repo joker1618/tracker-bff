@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xxx.joker.libs.core.files.JkFiles;
+import xxx.joker.libs.core.format.JkOutput;
 import xxx.joker.libs.core.lambdas.JkStreams;
-import xxx.joker.libs.core.utils.JkConsole;
+import xxx.joker.libs.core.runtimes.JkReflection;
 import xxx.joker.libs.core.utils.JkStrings;
 
 import java.time.LocalDateTime;
@@ -59,7 +60,7 @@ public class TrackerConfig {
     @Autowired
     private WrcGroundTypeRepo groundTypeRepo;
     @Autowired
-    private WrcGroundMixRepo groundCompositionRepo;
+    private WrcGroundMixRepo groundMixRepo;
     @Autowired
     private WrcSurfaceRepo surfaceRepo;
 
@@ -74,21 +75,36 @@ public class TrackerConfig {
 
     @GetMapping("/a")
     public ResponseEntity<List<WrcDriver>> a() {
+        WrcCountry country = countryRepo.findByName("Italy");
+        AS as1 = JkReflection.copyFields(country, AS.class);
+        display(JkOutput.formatObject(as1));
+        AS as2 = JkReflection.copyFields(country, AS.class, "id=pid name");
+        display("\n\n\n\n\n\n");
+        display(JkOutput.formatObject(as2));
+
 //        stageRepo.findAll().forEach(JkConsole::display);
 //        display(countryRepo.findByName("SPAIN"));
 //        JkOutput.formatCollection(countryRepo.findAll(), "country code order").forEach(JkConsole::display);
         return ResponseEntity.ok(driverRepo.findAll());
     }
+
     @GetMapping("/b")
     public ResponseEntity<List<WrcCountry>> b() {
-//        stageRepo.findAll().forEach(JkConsole::display);
-//        display(countryRepo.findByName("SPAIN"));
-//        JkOutput.formatCollection(countryRepo.findAll(), "country code order").forEach(JkConsole::display);
         return ResponseEntity.ok(countryRepo.findAll());
     }
+    @GetMapping("/c")
+    public ResponseEntity<List<WrcSurface>> c() {
+        return ResponseEntity.ok(surfaceRepo.findAll());
+    }
+    @GetMapping("/d")
+    public ResponseEntity<List<WrcGroundMix>> d() {
+        return ResponseEntity.ok(groundMixRepo.findAll());
+    }
+
 
     @GetMapping("/shutdown")
     public void shutdown() {
+
         SpringApplication.exit(context);
     }
 
@@ -168,7 +184,7 @@ public class TrackerConfig {
         for (String line : lines) {
             String[] split = JkStrings.splitArr(line, "|");
             WrcStage stage = new WrcStage();
-            stage.setCountryObj(countryRepo.findByName(split[0]));
+            stage.setCountry(countryRepo.findByName(split[0]));
             stage.setLocation(split[1]);
             stage.setNumInRally(Integer.parseInt(split[2]));
             stage.setLength(Integer.parseInt(split[3]));
@@ -181,7 +197,7 @@ public class TrackerConfig {
                 WrcGroundMix gcomp = new WrcGroundMix(gtMap.get(el[0].toLowerCase()), Double.parseDouble(el[1]));
                 WrcGroundMix found = JkStreams.findUnique(allMixesDistinct, gcomp::hasEqualsContent);
                 if(found == null) {
-                    found = groundCompositionRepo.save(gcomp);
+                    found = groundMixRepo.save(gcomp);
                     allMixesDistinct.add(found);
                 }
                 surface.getGroundMixList().add(found);
@@ -248,7 +264,7 @@ public class TrackerConfig {
                 prevSeason = seasonId;
             }
 
-            List<WrcStage> stages = stageRepo.getStages(country.getCountry().trim());
+            List<WrcStage> stages = stageRepo.getStages(country.getName().trim());
             match.setStage(stages.get(Integer.parseInt(row[3]) % stages.size()));
             match.setWinner(driverRepo.findByName(row[4]));
             if(StringUtils.isNotBlank(row[5])) {

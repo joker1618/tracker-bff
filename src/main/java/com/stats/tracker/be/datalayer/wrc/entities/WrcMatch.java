@@ -13,22 +13,22 @@ public class WrcMatch extends AbstractEntity implements Serializable {
     private long id;
 
     @NotNull
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne
     private WrcWeather weather;
-    @ManyToOne(cascade= CascadeType.ALL)
     @NotNull
+    @ManyToOne
     private WrcRaceTime raceTime;
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne
     private WrcCar carFede;
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne
     private WrcCar carBomber;
-    @ManyToOne(cascade= CascadeType.ALL)
     @NotNull
+    @ManyToOne
     private WrcDriver winner;
     @NotNull
     private LocalDateTime matchTime;
-    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
+    @ManyToOne
     private WrcStage stage;
 
 

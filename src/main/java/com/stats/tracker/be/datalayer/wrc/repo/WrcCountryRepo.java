@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WrcCountryRepo extends JpaRepository<WrcCountry, Long> {
 
-    @Query(value = "select c from WrcCountry c where LOWER(c.country) = LOWER(:countryName)")
+    @Query(value = "select c from WrcCountry c where LOWER(c.name) = LOWER(:countryName)")
     WrcCountry findByName(@Param("countryName") String countryName);
 
 }

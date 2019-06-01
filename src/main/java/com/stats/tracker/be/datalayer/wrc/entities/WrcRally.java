@@ -11,13 +11,13 @@ public class WrcRally extends AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long rallyId;
+    private long id;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private WrcCountry country;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<WrcMatch> matches = new ArrayList<>();
 
     public WrcRally() {
@@ -25,8 +25,8 @@ public class WrcRally extends AbstractEntity implements Serializable {
     }
 
 
-    public long getRallyId() {
-        return rallyId;
+    public long getId() {
+        return id;
     }
 
     public List<WrcMatch> getMatches() {

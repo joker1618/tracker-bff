@@ -12,11 +12,12 @@ public class WrcSeason extends AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long seasonId;
+    private long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<WrcRally> rallies = new ArrayList<>();
 
+    @NotNull
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
@@ -48,8 +49,8 @@ public class WrcSeason extends AbstractEntity implements Serializable {
         this.endTime = endTime;
     }
 
-    public long getSeasonId() {
-        return seasonId;
+    public long getId() {
+        return id;
     }
 
 

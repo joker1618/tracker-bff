@@ -5,7 +5,9 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"car_model"})})
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"carModel"})
+})
 public class WrcCar extends AbstractEntity implements Serializable {
 
     @Id
@@ -13,7 +15,6 @@ public class WrcCar extends AbstractEntity implements Serializable {
     private long id;
 
     @NotNull
-    @Column(name = "car_model")
     private String carModel;
 
     public WrcCar() {

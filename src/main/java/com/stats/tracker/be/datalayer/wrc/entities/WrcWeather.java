@@ -6,7 +6,9 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"weather"})})
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"weather"})
+})
 public class WrcWeather extends AbstractEntity implements Serializable {
 
     @Id
@@ -14,7 +16,6 @@ public class WrcWeather extends AbstractEntity implements Serializable {
     private long id;
 
     @NotNull
-    @Column(name = "weather")
     private String weather;
 
     public WrcWeather() {

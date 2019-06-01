@@ -7,21 +7,30 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
+//@Table(uniqueConstraints={
+//        @UniqueConstraint(columnNames = {"name"}),
+//        @UniqueConstraint(columnNames = {"code"}),
+//        @UniqueConstraint(columnNames = {"index"})
+//})
 public class WrcStage extends AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private WrcCountry countryObj;
+    @NotNull
+    @ManyToOne
+    private WrcCountry country;
     @NotNull
     private String location;
-    @Column(name = "numInRally")
+    @NotNull
     private int numInRally;
+    @NotNull
     private int length;
+    @NotNull
     private boolean specialStage;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull
+    @ManyToOne
     private WrcSurface surface;
 
 
@@ -32,12 +41,12 @@ public class WrcStage extends AbstractEntity implements Serializable {
         return id;
     }
 
-    public WrcCountry getCountryObj() {
-        return countryObj;
+    public WrcCountry getCountry() {
+        return country;
     }
 
-    public void setCountryObj(WrcCountry countryObj) {
-        this.countryObj = countryObj;
+    public void setCountry(WrcCountry country) {
+        this.country = country;
     }
 
     public String getLocation() {

@@ -5,7 +5,9 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"race_time"})})
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"raceTime"})
+})
 public class WrcRaceTime extends AbstractEntity  implements Serializable {
 
     @Id
@@ -13,7 +15,6 @@ public class WrcRaceTime extends AbstractEntity  implements Serializable {
     private long id;
 
     @NotNull
-    @Column(name = "race_time")
     private String raceTime;
 
     public WrcRaceTime() {

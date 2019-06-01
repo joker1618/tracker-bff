@@ -5,34 +5,40 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"name"}),
+        @UniqueConstraint(columnNames = {"code"}),
+        @UniqueConstraint(columnNames = {"index"})
+})
+
 public class WrcCountry  extends AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long countryId;
+    private long id;
 
     @NotNull
-    @Column(name = "country")
-    private String country;
+    private String name;
     @NotNull
     private String code;
+    @NotNull
     private int index;
 
     public WrcCountry() {
     }
 
-    public WrcCountry(String country, String code, int index) {
-        this.country = country;
+    public WrcCountry(String name, String code, int index) {
+        this.name = name;
         this.code = code;
         this.index = index;
     }
 
-    public long getCountryId() {
-        return countryId;
+    public long getId() {
+        return id;
     }
 
-    public String getCountry() {
-        return country;
+    public String getName() {
+        return name;
     }
 
     public String getCode() {

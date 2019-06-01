@@ -13,8 +13,8 @@ public class WrcGroundMix extends AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
     @NotNull
+    @ManyToOne
     private WrcGroundType groundType;
 
     @NotNull
