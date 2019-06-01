@@ -85,6 +85,7 @@ public class TrackerConfig {
 //        stageRepo.findAll().forEach(JkConsole::display);
 //        display(countryRepo.findByName("SPAIN"));
 //        JkOutput.formatCollection(countryRepo.findAll(), "country code order").forEach(JkConsole::display);
+
         return ResponseEntity.ok(driverRepo.findAll());
     }
     @GetMapping("/b")
