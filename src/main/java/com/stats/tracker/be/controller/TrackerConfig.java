@@ -87,7 +87,6 @@ public class TrackerConfig {
 //        JkOutput.formatCollection(countryRepo.findAll(), "country code order").forEach(JkConsole::display);
         return ResponseEntity.ok(driverRepo.findAll());
     }
-
     @GetMapping("/b")
     public ResponseEntity<List<WrcCountry>> b() {
         return ResponseEntity.ok(countryRepo.findAll());
