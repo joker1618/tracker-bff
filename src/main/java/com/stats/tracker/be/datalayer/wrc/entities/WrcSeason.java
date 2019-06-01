@@ -14,15 +14,14 @@ public class WrcSeason extends AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<WrcRally> rallies = new ArrayList<>();
 
     @NotNull
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private boolean finished;
 
     public WrcSeason() {
-        startTime = LocalDateTime.now();
+        finished = false;
     }
 
     public List<WrcRally> getRallies() {
@@ -33,20 +32,13 @@ public class WrcSeason extends AbstractEntity implements Serializable {
         this.rallies = rallies;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+
+    public boolean isFinished() {
+        return finished;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public long getId() {

@@ -13,4 +13,5 @@ public interface WrcCarRepo extends JpaRepository<WrcCar, Long> {
 
     @Query(value = "select c from WrcCar c where LOWER(c.carModel) = LOWER(:carModel)")
     WrcCar findByModel(@Param("carModel") String carModel);
+
 }

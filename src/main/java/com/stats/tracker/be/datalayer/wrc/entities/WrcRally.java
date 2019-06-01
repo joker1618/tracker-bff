@@ -16,14 +16,14 @@ public class WrcRally extends AbstractEntity implements Serializable {
     @NotNull
     @ManyToOne
     private WrcCountry country;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<WrcMatch> matches = new ArrayList<>();
     @NotNull
     private boolean finished;
 
 
     public WrcRally() {
-
+        finished = false;
     }
 
 

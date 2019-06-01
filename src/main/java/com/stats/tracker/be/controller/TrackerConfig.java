@@ -5,10 +5,13 @@ import com.stats.tracker.be.datalayer.wrc.entities.surface.WrcGroundMix;
 import com.stats.tracker.be.datalayer.wrc.entities.surface.WrcGroundType;
 import com.stats.tracker.be.datalayer.wrc.entities.surface.WrcSurface;
 import com.stats.tracker.be.datalayer.wrc.repo.*;
+import com.stats.tracker.be.exception.GenericException;
+import com.stats.tracker.be.restModel.RestResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +29,7 @@ import static xxx.joker.libs.core.utils.JkConsole.display;
 
 @RestController
 @RequestMapping("config")
-public class TrackerConfig {
+public class TrackerConfig extends AbstractController {
 
     private static final String SETUP_FILES_FOLDER = "setup";
     private static final String FN_CARS = SETUP_FILES_FOLDER + "/cars.csv";
@@ -39,35 +42,6 @@ public class TrackerConfig {
     private static final String FN_MATCHES = SETUP_FILES_FOLDER + "/matches.csv";
 
 
-    @Autowired
-    private WrcCarRepo carRepo;
-    @Autowired
-    private WrcWeatherRepo weatherRepo;
-    @Autowired
-    private WrcRaceTimeRepo raceTimeRepo;
-    @Autowired
-    private WrcMatchRepo matchRepo;
-    @Autowired
-    private WrcRallyRepo rallyRepo;
-    @Autowired
-    private WrcSeasonRepo seasonRepo;
-    @Autowired
-    private WrcDriverRepo driverRepo;
-    @Autowired
-    private WrcCountryRepo countryRepo;
-    @Autowired
-    private WrcStageRepo stageRepo;
-    @Autowired
-    private WrcGroundTypeRepo groundTypeRepo;
-    @Autowired
-    private WrcGroundMixRepo groundMixRepo;
-    @Autowired
-    private WrcSurfaceRepo surfaceRepo;
-
-    @Autowired
-    private ApplicationContext context;
-
-
     @GetMapping("/hello")
     public String hello() {
         return "hello";
@@ -75,17 +49,6 @@ public class TrackerConfig {
 
     @GetMapping("/a")
     public ResponseEntity<List<WrcDriver>> a() {
-        WrcCountry country = countryRepo.findByName("Italy");
-        AS as1 = JkReflection.copyFields(country, AS.class);
-        display(JkOutput.formatObject(as1));
-        AS as2 = JkReflection.copyFields(country, AS.class, "id=pid name");
-        display("\n\n\n\n\n\n");
-        display(JkOutput.formatObject(as2));
-
-//        stageRepo.findAll().forEach(JkConsole::display);
-//        display(countryRepo.findByName("SPAIN"));
-//        JkOutput.formatCollection(countryRepo.findAll(), "country code order").forEach(JkConsole::display);
-
         return ResponseEntity.ok(driverRepo.findAll());
     }
     @GetMapping("/b")
@@ -93,12 +56,29 @@ public class TrackerConfig {
         return ResponseEntity.ok(countryRepo.findAll());
     }
     @GetMapping("/c")
-    public ResponseEntity<List<WrcSurface>> c() {
-        return ResponseEntity.ok(surfaceRepo.findAll());
+    public ResponseEntity<List<WrcSurface>> c() throws Exception {
+//        return ResponseEntity.ok(surfaceRepo.findAll());
+        throw new GenericException(new Exception("exc"), HttpStatus.BAD_REQUEST, "pippo {}", "pluto");
     }
     @GetMapping("/d")
     public ResponseEntity<String> d() {
         return ResponseEntity.ok("<html><head></head><body><h1>fede</h1></body></html>");
+    }
+    @GetMapping("/e")
+    public ResponseEntity<List<WrcStage>> e() {
+        return ResponseEntity.ok(stageRepo.getStages("italy"));
+    }
+//    @GetMapping("/en")
+//    public RestResponse<List> en() {
+//        return RestResponse.ok(stageRepo.getStages("italy"));
+//    }
+    @GetMapping("/f")
+    public ResponseEntity<List<WrcStage>> f() {
+        return ResponseEntity.ok(stageRepo.getStages("notExists"));
+    }
+    @GetMapping("/null")
+    public ResponseEntity<Object> mnull() {
+        return ResponseEntity.ok(null);
     }
 
 
@@ -241,14 +221,15 @@ public class TrackerConfig {
             long seasonId = Long.parseLong(row[1]);
             long rallyId = Long.parseLong(row[2]);
 
-            if(!openedSeason && Boolean.valueOf(row[11])) {
+            if(!openedSeason && !Boolean.valueOf(row[11])) {
+                season.setFinished(false);
                 openedSeason = true;
             }
 
             if(prevRally != rallyId) {
                 if(rally != null) {
                     rally.setFinished(true);
-                    rallyRepo.save(rally);
+//                    rallyRepo.save(rally);
                     season.getRallies().add(rally);
                 }
                 rally = new WrcRally();
@@ -258,10 +239,10 @@ public class TrackerConfig {
 
             if(prevSeason != seasonId) {
                 if(season != null) {
+                    season.setFinished(true);
                     seasonRepo.save(season);
                 }
                 season = new WrcSeason();
-                season.setStartTime(LocalDateTime.parse(row[12]));
                 prevSeason = seasonId;
             }
 
@@ -275,29 +256,29 @@ public class TrackerConfig {
             match.setWeather(weatherRepo.findByName(row[7].replace("_", " ")));
             match.setRaceTime(raceTimeRepo.findByName(row[8]));
             match.setMatchTime(LocalDateTime.parse(row[9]));
-            matchRepo.save(match);
+//            matchRepo.save(match);
 
             rally.getMatches().add(match);
         }
 
         if(rally != null) {
             rally.setFinished(true);
-            rallyRepo.save(rally);
+//            rallyRepo.save(rally);
             season.getRallies().add(rally);
             seasonRepo.save(season);
         }
 
-        WrcSeason last = null;
-        for (WrcSeason s : seasonRepo.findAll()) {
-            Optional<WrcMatch> max = s.getRallies().stream().flatMap(r -> r.getMatches().stream()).max(Comparator.comparing(WrcMatch::getMatchTime));
-            s.setEndTime(max.get().getMatchTime());
-            last = seasonRepo.save(s);
-        }
 
-        if(openedSeason)    {
-            last.setEndTime(null);
-            seasonRepo.save(last);
-        }
+//        WrcSeason last = null;
+//        for (WrcSeason s : seasonRepo.findAll()) {
+//            Optional<WrcMatch> max = s.getRallies().stream().flatMap(r -> r.getMatches().stream()).max(Comparator.comparing(WrcMatch::getMatchTime));
+//            last = seasonRepo.save(s);
+//        }
+//
+//        if(openedSeason)    {
+//            last.setEndTime(null);
+//            seasonRepo.save(last);
+//        }
 
         return toRet;
     }

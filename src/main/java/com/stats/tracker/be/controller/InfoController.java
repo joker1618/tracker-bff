@@ -3,6 +3,7 @@ package com.stats.tracker.be.controller;
 import com.stats.tracker.be.datalayer.wrc.entities.WrcCar;
 import com.stats.tracker.be.datalayer.wrc.entities.WrcCountry;
 import com.stats.tracker.be.datalayer.wrc.entities.WrcDriver;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcMatch;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,24 +13,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/info")
-public class InfoController {
+public class InfoController extends AbstractController {
 
     @GetMapping("/drivers")
     public ResponseEntity<List<WrcDriver>> getDrivers() {
-        //todo impl
-        return null;
+        return ResponseEntity.ok(driverRepo.findAll());
     }
 
     @GetMapping("/cars")
     public ResponseEntity<List<WrcCar>> getCars() {
-        //todo impl
-        return null;
+        return ResponseEntity.ok(carRepo.findAll());
     }
 
     @GetMapping("/countries")
     public ResponseEntity<List<WrcCountry>> getCountries() {
-        //todo impl
-        return null;
+        return ResponseEntity.ok(countryRepo.findAll());
     }
 
 }

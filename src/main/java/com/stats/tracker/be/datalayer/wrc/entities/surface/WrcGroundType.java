@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.Objects;
 
 @Entity
-@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"ground_type"})})
+@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"groundType"})})
 public class WrcGroundType extends AbstractEntity implements Serializable, Comparable<WrcGroundType> {
 
     @Id
@@ -17,7 +17,6 @@ public class WrcGroundType extends AbstractEntity implements Serializable, Compa
     private long id;
 
     @NotNull
-    @Column(name = "ground_type")
     private String groundType;
 
     public WrcGroundType() {

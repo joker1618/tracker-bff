@@ -2,6 +2,8 @@ package com.stats.tracker.be.exception;
 
 import org.springframework.http.HttpStatus;
 
+import static xxx.joker.libs.core.utils.JkStrings.strf;
+
 public class GenericException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
@@ -15,20 +17,20 @@ public class GenericException extends RuntimeException {
     }
     public GenericException(HttpStatus status, String mexFormat, Object... params) {
         this.status = status;
-        this.errorMessage = String.format(mexFormat, params);
+        this.errorMessage = strf(mexFormat, params);
     }
     public GenericException(String mexFormat, Object... params) {
         this.status = HttpStatus.INTERNAL_SERVER_ERROR;
-        this.errorMessage = String.format(mexFormat, params);
+        this.errorMessage = strf(mexFormat, params);
     }
     public GenericException(Throwable t, String mexFormat, Object... params) {
         this.status = HttpStatus.INTERNAL_SERVER_ERROR;
-        this.errorMessage = String.format(mexFormat, params);
+        this.errorMessage = strf(mexFormat, params);
         this.cause = t;
     }
     public GenericException(Throwable t, HttpStatus status, String mexFormat, Object... params) {
         this.status = status;
-        this.errorMessage = String.format(mexFormat, params);
+        this.errorMessage = strf(mexFormat, params);
         this.cause = t;
     }
 
