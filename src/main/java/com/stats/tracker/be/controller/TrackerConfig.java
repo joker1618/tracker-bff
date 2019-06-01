@@ -97,8 +97,8 @@ public class TrackerConfig {
         return ResponseEntity.ok(surfaceRepo.findAll());
     }
     @GetMapping("/d")
-    public ResponseEntity<List<WrcGroundMix>> d() {
-        return ResponseEntity.ok(groundMixRepo.findAll());
+    public ResponseEntity<String> d() {
+        return ResponseEntity.ok("<html><head></head><body><h1>fede</h1></body></html>");
     }
 
 
@@ -247,6 +247,7 @@ public class TrackerConfig {
 
             if(prevRally != rallyId) {
                 if(rally != null) {
+                    rally.setFinished(true);
                     rallyRepo.save(rally);
                     season.getRallies().add(rally);
                 }
@@ -280,6 +281,7 @@ public class TrackerConfig {
         }
 
         if(rally != null) {
+            rally.setFinished(true);
             rallyRepo.save(rally);
             season.getRallies().add(rally);
             seasonRepo.save(season);

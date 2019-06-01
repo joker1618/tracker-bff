@@ -7,11 +7,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-//@Table(uniqueConstraints={
-//        @UniqueConstraint(columnNames = {"name"}),
-//        @UniqueConstraint(columnNames = {"code"}),
-//        @UniqueConstraint(columnNames = {"index"})
-//})
 public class WrcStage extends AbstractEntity implements Serializable {
 
     @Id

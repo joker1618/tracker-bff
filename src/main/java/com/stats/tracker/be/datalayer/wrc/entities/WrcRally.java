@@ -16,9 +16,11 @@ public class WrcRally extends AbstractEntity implements Serializable {
     @NotNull
     @ManyToOne
     private WrcCountry country;
-
     @OneToMany
     private List<WrcMatch> matches = new ArrayList<>();
+    @NotNull
+    private boolean finished;
+
 
     public WrcRally() {
 
@@ -43,5 +45,13 @@ public class WrcRally extends AbstractEntity implements Serializable {
 
     public void setCountry(WrcCountry country) {
         this.country = country;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 }
