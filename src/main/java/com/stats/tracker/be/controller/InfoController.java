@@ -62,6 +62,15 @@ public class InfoController extends AbstractController {
         return ResponseEntity.ok(seasonRepo.findAll());
     }
 
+    @GetMapping("/rallies")
+    public ResponseEntity<List<WrcRally>> getRallies() {
+        return ResponseEntity.ok(rallyRepo.findAll());
+    }
+
+    @GetMapping("/matches")
+    public ResponseEntity<List<WrcMatch>> getMatches() {
+        return ResponseEntity.ok(matchRepo.findAll());
+    }
     @GetMapping("/match0")
     public ResponseEntity<WrcMatch> getMatch0() {
         return ResponseEntity.ok(matchRepo.findAll().get(0));

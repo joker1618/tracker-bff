@@ -17,12 +17,6 @@ public class JsonStat implements Serializable {
         this.valBomber = valBomber;
     }
 
-    public JsonStat(StatType type, int valFede, int valBomber) {
-        this.label = type.name();
-        this.valFede = valFede;
-        this.valBomber = valBomber;
-    }
-
     public String getLabel() {
         return label;
     }

@@ -13,7 +13,7 @@ public class JsonSeason implements Serializable {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    private List<JsonStat> rallies;
+    private List<JsonStat> rallyResults;
     private JsonStat totStage;
     private JsonStat totRally;
 

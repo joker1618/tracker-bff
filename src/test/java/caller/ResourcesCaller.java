@@ -17,7 +17,7 @@ public class ResourcesCaller {
     public void getFlag() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<byte[]> response = restTemplate.exchange(
-                "http://localhost:666/wrc/resources/flag?countryName=United Kingdom",
+                "http://localhost:666/wrc/resources/flag?countryName=France",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<byte[]>(){});

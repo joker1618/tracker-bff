@@ -12,8 +12,10 @@ public class WrcSurface extends AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToMany
-    private List<WrcGroundMix> groundMixList = new ArrayList<>();
+    @ManyToOne
+    private WrcGroundMix primaryGround;
+    @ManyToOne
+    private WrcGroundMix secondaryGround;
 
 
     public WrcSurface() {
@@ -24,20 +26,27 @@ public class WrcSurface extends AbstractEntity implements Serializable {
         return id;
     }
 
-    public List<WrcGroundMix> getGroundMixList() {
-        return groundMixList;
+    public WrcGroundMix getPrimaryGround() {
+        return primaryGround;
     }
 
-    public void setGroundMixList(List<WrcGroundMix> groundMixList) {
-        this.groundMixList = groundMixList;
+    public void setPrimaryGround(WrcGroundMix primaryGround) {
+        this.primaryGround = primaryGround;
+    }
+
+    public WrcGroundMix getSecondaryGround() {
+        return secondaryGround;
+    }
+
+    public void setSecondaryGround(WrcGroundMix secondaryGround) {
+        this.secondaryGround = secondaryGround;
     }
 
     public boolean hasSameContent(WrcSurface o) {
-        if(groundMixList.size() != o.getGroundMixList().size()) {
-            return false;
-        }
-        List<WrcGroundMix> mixes = new ArrayList<>(o.getGroundMixList());
-        groundMixList.forEach(m -> mixes.removeIf(m::hasEqualsContent));
-        return mixes.isEmpty();
+        boolean res = primaryGround.hasEqualsContent(o.primaryGround);
+        if(!res)    return false;
+        if(secondaryGround == null && o.secondaryGround == null)    return true;
+        if(secondaryGround == null || o.secondaryGround == null)    return false;
+        return secondaryGround.hasEqualsContent(o.secondaryGround);
     }
 }

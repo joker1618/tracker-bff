@@ -175,7 +175,11 @@ public class TrackerConfig extends AbstractController {
                     found = groundMixRepo.save(gcomp);
                     allMixesDistinct.add(found);
                 }
-                surface.getGroundMixList().add(found);
+                if(found.getGroundPerc() > 0.5) {
+                    surface.setPrimaryGround(found);
+                } else {
+                    surface.setSecondaryGround(found);
+                }
             }
 
             WrcSurface found = JkStreams.findUnique(surfaceRepo.findAll(), surface::hasSameContent);

@@ -30,6 +30,21 @@ public class InfoCaller {
         display(JkOutput.formatColl(body));
     }
 
+
+    @Test
+    public void showRallies() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<List<WrcRally>> response = restTemplate.exchange(
+                "http://localhost:666/wrc/info/rallies",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<WrcRally>>(){});
+        List<WrcRally> body = response.getBody();
+        display(response);
+        display(response.getBody());
+        display(JkOutput.formatColl(body));
+    }
+
     @Test
     public void s() {
         RestTemplate restTemplate = new RestTemplate();
@@ -143,12 +158,26 @@ public class InfoCaller {
                 "http://localhost:666/wrc/info/surfaces",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcSurface>>(){});
+                new ParameterizedTypeReference<List<WrcSurface>>(){}
+        );
         display(response);
         display(response.getBody());
         display(JkOutput.formatColl(response.getBody()));
     }
 
+    @Test
+    public void showMatches() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<List<WrcMatch>> response = restTemplate.exchange(
+                "http://localhost:666/wrc/info/matches",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<WrcMatch>>(){}
+        );
+        display(response);
+        display(response.getBody());
+        display(JkOutput.formatObject(response.getBody()));
+    }
     @Test
     public void showMatch0() {
         RestTemplate restTemplate = new RestTemplate();

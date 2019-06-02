@@ -17,6 +17,11 @@ public class ErrorResponse {
         this.errorStatus = httpStatus;
         this.errorMex = errorMex;
     }
+    public ErrorResponse(HttpStatus httpStatus, Throwable t) {
+        this.errorCode = httpStatus.value();
+        this.errorStatus = httpStatus;
+        this.errorMex = t.toString();
+    }
 
     public int getErrorCode() {
         return errorCode;

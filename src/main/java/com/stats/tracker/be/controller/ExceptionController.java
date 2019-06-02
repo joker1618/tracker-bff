@@ -31,15 +31,5 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         ErrorResponse error = new ErrorResponse(ex.getStatus(), ex.getMessage());
         return ResponseEntity.status(error.getErrorStatus()).body(error);
     }
-//
-//    @ExceptionHandler(GenericException.class)
-//    public ResponseEntity<ErrorResponse> handleRestErrorGen(GenericException ex) {
-//        logger.error("Handling Generic Exception: " + ex.getMessage(), ex);
-//        if(ex.getCause() != null) {
-//            logger.error("Caused by: " + ex.getCause(), ex.getCause());
-//        }
-//        ErrorResponse error = new ErrorResponse(ex.getStatus(), ex.getMessage());
-//        return ResponseEntity.status(error.getErrorCode()).body(error);
-//    }
 
 }

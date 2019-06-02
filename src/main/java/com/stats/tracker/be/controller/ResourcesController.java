@@ -18,7 +18,7 @@ import static xxx.joker.libs.core.utils.JkStrings.strf;
 public class ResourcesController extends AbstractController {
 
     @GetMapping(value = "/flag", produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<byte[]> getCountryFlag(@RequestParam("countryName") String countryName) throws IOException {
+    public ResponseEntity<byte[]> getCountryFlag(@RequestParam String countryName) throws IOException {
 
         ClassPathResource cpres = new ClassPathResource(strf("images/flags/{}.png", countryName));
         byte[] bytes = StreamUtils.copyToByteArray(cpres.getInputStream());
