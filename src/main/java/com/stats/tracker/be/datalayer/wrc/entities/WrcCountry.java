@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Table(uniqueConstraints={
         @UniqueConstraint(columnNames = {"name"}),
         @UniqueConstraint(columnNames = {"code"}),
-        @UniqueConstraint(columnNames = {"index"})
+        @UniqueConstraint(columnNames = {"numInSeason"})
 })
 
 public class WrcCountry  extends AbstractEntity implements Serializable {
@@ -22,15 +22,15 @@ public class WrcCountry  extends AbstractEntity implements Serializable {
     @NotNull
     private String code;
     @NotNull
-    private int index;
+    private int numInSeason;
 
     public WrcCountry() {
     }
 
-    public WrcCountry(String name, String code, int index) {
+    public WrcCountry(String name, String code, int numInSeason) {
         this.name = name;
         this.code = code;
-        this.index = index;
+        this.numInSeason = numInSeason;
     }
 
     public long getId() {
@@ -45,7 +45,7 @@ public class WrcCountry  extends AbstractEntity implements Serializable {
         return code;
     }
 
-    public int getIndex() {
-        return index;
+    public int getNumInSeason() {
+        return numInSeason;
     }
 }

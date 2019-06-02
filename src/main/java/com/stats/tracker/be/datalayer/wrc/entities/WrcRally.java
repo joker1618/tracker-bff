@@ -19,11 +19,13 @@ public class WrcRally extends AbstractEntity implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<WrcMatch> matches = new ArrayList<>();
     @NotNull
-    private boolean finished;
+    private boolean inProgress;
+//    @ManyToOne
+//    private WrcSeason season;
 
 
     public WrcRally() {
-        finished = false;
+
     }
 
 
@@ -47,11 +49,19 @@ public class WrcRally extends AbstractEntity implements Serializable {
         this.country = country;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public boolean isInProgress() {
+        return inProgress;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+//    public WrcSeason getSeason() {
+//        return season;
+//    }
+//
+//    public void setSeason(WrcSeason season) {
+//        this.season = season;
+//    }
+
+    public void setInProgress(boolean inProgress) {
+        this.inProgress = inProgress;
     }
 }

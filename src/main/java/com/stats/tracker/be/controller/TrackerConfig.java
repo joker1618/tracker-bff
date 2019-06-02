@@ -1,25 +1,19 @@
 package com.stats.tracker.be.controller;
 
 import com.stats.tracker.be.datalayer.wrc.entities.*;
-import com.stats.tracker.be.datalayer.wrc.entities.surface.WrcGroundMix;
-import com.stats.tracker.be.datalayer.wrc.entities.surface.WrcGroundType;
-import com.stats.tracker.be.datalayer.wrc.entities.surface.WrcSurface;
-import com.stats.tracker.be.datalayer.wrc.repo.*;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcGroundMix;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcGroundType;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcSurface;
 import com.stats.tracker.be.exception.GenericException;
-import com.stats.tracker.be.restModel.RestResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xxx.joker.libs.core.files.JkFiles;
-import xxx.joker.libs.core.format.JkOutput;
 import xxx.joker.libs.core.lambdas.JkStreams;
-import xxx.joker.libs.core.runtimes.JkReflection;
 import xxx.joker.libs.core.utils.JkStrings;
 
 import java.time.LocalDateTime;
@@ -56,9 +50,10 @@ public class TrackerConfig extends AbstractController {
         return ResponseEntity.ok(countryRepo.findAll());
     }
     @GetMapping("/c")
-    public ResponseEntity<List<WrcSurface>> c() throws Exception {
+    public ResponseEntity<WrcWeather> c() {
 //        return ResponseEntity.ok(surfaceRepo.findAll());
-        throw new GenericException(new Exception("exc"), HttpStatus.BAD_REQUEST, "pippo {}", "pluto");
+        throw new GenericException(HttpStatus.PERMANENT_REDIRECT, "pippo {}", "pluto");
+//        throw new GenericException(new Exception("exc"), HttpStatus.BAD_REQUEST, "pippo {}", "pluto");
     }
     @GetMapping("/d")
     public ResponseEntity<String> d() {
@@ -211,38 +206,35 @@ public class TrackerConfig extends AbstractController {
         long prevSeason = -1;
         long prevRally = -1;
         WrcRally rally = null;
-        boolean openedSeason = false;
 
         List<WrcMatch> toRet = new ArrayList<>();
         for (String line : lines) {
             String[] row = JkStrings.splitArr(line, "|");
             WrcMatch match = new WrcMatch();
+            match.setMatchTime(LocalDateTime.now());
             WrcCountry country = countryRepo.findByName(row[0]);
             long seasonId = Long.parseLong(row[1]);
             long rallyId = Long.parseLong(row[2]);
 
-            if(!openedSeason && !Boolean.valueOf(row[11])) {
-                season.setFinished(false);
-                openedSeason = true;
-            }
-
             if(prevRally != rallyId) {
                 if(rally != null) {
-                    rally.setFinished(true);
-//                    rallyRepo.save(rally);
+                    rally.setInProgress(false);
+                    rallyRepo.save(rally);
+//                    rally.setSeason(season);
                     season.getRallies().add(rally);
                 }
                 rally = new WrcRally();
+                rally.setInProgress(true);
                 rally.setCountry(country);
                 prevRally = rallyId;
             }
 
             if(prevSeason != seasonId) {
                 if(season != null) {
-                    season.setFinished(true);
                     seasonRepo.save(season);
                 }
                 season = new WrcSeason();
+                season.setInProgress(!Boolean.valueOf(row[11]));
                 prevSeason = seasonId;
             }
 
@@ -257,13 +249,15 @@ public class TrackerConfig extends AbstractController {
             match.setRaceTime(raceTimeRepo.findByName(row[8]));
             match.setMatchTime(LocalDateTime.parse(row[9]));
 //            matchRepo.save(match);
+//            match.setRally(rally);
 
             rally.getMatches().add(match);
         }
 
         if(rally != null) {
-            rally.setFinished(true);
+            rally.setInProgress(true);
 //            rallyRepo.save(rally);
+//            rally.setSeason(season);
             season.getRallies().add(rally);
             seasonRepo.save(season);
         }

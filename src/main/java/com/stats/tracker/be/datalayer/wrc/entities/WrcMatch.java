@@ -30,11 +30,15 @@ public class WrcMatch extends AbstractEntity implements Serializable {
     @NotNull
     @ManyToOne
     private WrcStage stage;
+//    @ManyToOne
+//    private WrcRally rally;
+//    @NotNull
+//    private WrcRally rallyID;
 
 
 
     public WrcMatch() {
-        matchTime = LocalDateTime.now();
+
     }
 
     public WrcStage getStage() {
@@ -97,4 +101,11 @@ public class WrcMatch extends AbstractEntity implements Serializable {
         this.matchTime = matchTime;
     }
 
+//    public WrcRally getRally() {
+//        return rally;
+//    }
+//
+//    public void setRally(WrcRally rally) {
+//        this.rally = rally;
+//    }
 }

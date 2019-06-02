@@ -4,29 +4,41 @@ import org.springframework.http.HttpStatus;
 
 public class ErrorResponse {
 
-    private int statusCode;
-    private String error;
+    private int errorCode;
+    private HttpStatus errorStatus;
+    private String errorMex;
 
-    public ErrorResponse(int statusCode, String error) {
-        this.statusCode = statusCode;
-        this.error = error;
-    }
-    public ErrorResponse(HttpStatus httpStatus, String error) {
-        this.statusCode = httpStatus.value();
-        this.error = error;
+//    public ErrorResponse(int errorCode, String errorMex) {
+//        this.errorCode = errorCode;
+//        this.errorMex = errorMex;
+//    }
+    public ErrorResponse(HttpStatus httpStatus, String errorMex) {
+        this.errorCode = httpStatus.value();
+        this.errorStatus = httpStatus;
+        this.errorMex = errorMex;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public int getErrorCode() {
+        return errorCode;
     }
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
-    public String getError() {
-        return error;
+
+    public HttpStatus getErrorStatus() {
+        return errorStatus;
     }
-    public void setError(String error) {
-        this.error = error;
+
+    public void setErrorStatus(HttpStatus errorStatus) {
+        this.errorStatus = errorStatus;
+    }
+
+    public String getErrorMex() {
+        return errorMex;
+    }
+    public void setErrorMex(String errorMex) {
+        this.errorMex = errorMex;
     }
 
 }

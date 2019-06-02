@@ -1,6 +1,6 @@
 package com.stats.tracker.be.datalayer.wrc.repo;
 
-import com.stats.tracker.be.datalayer.wrc.entities.surface.WrcGroundMix;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcGroundMix;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

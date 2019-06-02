@@ -1,12 +1,8 @@
-package com.stats.tracker.be.datalayer.wrc.entities.surface;
-
-import com.stats.tracker.be.datalayer.wrc.entities.AbstractEntity;
+package com.stats.tracker.be.datalayer.wrc.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Comparator;
-import java.util.Objects;
 
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames = {"groundType"})})

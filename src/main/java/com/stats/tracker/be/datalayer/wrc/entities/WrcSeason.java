@@ -3,7 +3,6 @@ package com.stats.tracker.be.datalayer.wrc.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +17,10 @@ public class WrcSeason extends AbstractEntity implements Serializable {
     private List<WrcRally> rallies = new ArrayList<>();
 
     @NotNull
-    private boolean finished;
+    private boolean inProgress;
 
     public WrcSeason() {
-        finished = false;
+
     }
 
     public List<WrcRally> getRallies() {
@@ -33,12 +32,12 @@ public class WrcSeason extends AbstractEntity implements Serializable {
     }
 
 
-    public boolean isFinished() {
-        return finished;
+    public boolean isInProgress() {
+        return inProgress;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setInProgress(boolean inProgress) {
+        this.inProgress = inProgress;
     }
 
     public long getId() {

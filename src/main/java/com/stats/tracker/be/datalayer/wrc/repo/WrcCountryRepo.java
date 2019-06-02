@@ -15,7 +15,8 @@ public interface WrcCountryRepo extends JpaRepository<WrcCountry, Long> {
     WrcCountry findByName(@Param("countryName") String countryName);
 
     @Override
-    @Query(value = "select c from WrcCountry c order by c.index")
+    @Query(value = "select c from WrcCountry c order by c.numInSeason")
+//    @Query(value = "select c from WrcCountry c order by c.index")
     List<WrcCountry> findAll();
 
 }

@@ -19,4 +19,8 @@ public interface WrcStageRepo extends JpaRepository<WrcStage, Long> {
     @Query(value = "select c from WrcStage c where LOWER(c.country.name) = LOWER(:country)")
     List<WrcStage> getStages(@Param("country") String country);
 
+    @Override
+    @Query(value = "select c from WrcStage c order by c.id")
+    List<WrcStage> findAll();
+
 }

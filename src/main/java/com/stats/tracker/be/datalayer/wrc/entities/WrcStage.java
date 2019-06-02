@@ -1,7 +1,5 @@
 package com.stats.tracker.be.datalayer.wrc.entities;
 
-import com.stats.tracker.be.datalayer.wrc.entities.surface.WrcSurface;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WrcRallyRepo extends JpaRepository<WrcRally, Long> {
 
-    @Query(value = "select c from WrcRally c where c.finished <> true")
-    WrcRally getOpenedRally();
+    @Query(value = "select c from WrcRally c where c.inProgress = true")
+    WrcRally getRallyInProgress();
 
 
 }

@@ -1,6 +1,7 @@
 package com.stats.tracker.be.controller;
 
 import com.stats.tracker.be.datalayer.wrc.repo.*;
+import com.stats.tracker.be.service.DataService;
 import com.stats.tracker.be.service.WrcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 abstract class AbstractController {
 
     @Autowired
-    protected WrcService service;
+    protected WrcService wrcService;
+    @Autowired
+    protected DataService dataService;
 
     @Autowired
     protected WrcCarRepo carRepo;
