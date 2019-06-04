@@ -1,4 +1,4 @@
-package com.stats.tracker.be.restModel;
+package com.stats.tracker.be.restModel.out;
 
 import org.springframework.http.HttpStatus;
 

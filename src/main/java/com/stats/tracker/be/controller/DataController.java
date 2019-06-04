@@ -1,8 +1,7 @@
 package com.stats.tracker.be.controller;
 
-import com.stats.tracker.be.datalayer.wrc.entities.*;
-import com.stats.tracker.be.restModel.JsonMatch;
-import com.stats.tracker.be.restModel.JsonSeason;
+import com.stats.tracker.be.restModel.in.JsonMatchAdd;
+import com.stats.tracker.be.restModel.out.JsonSeason;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,15 +27,15 @@ public class DataController extends AbstractController {
     }
 
     @GetMapping("/rally/closeInProgress")
-    public ResponseEntity<Void> closeRallyInProgress() {
+    public ResponseEntity<JsonSeason> closeRallyInProgress() {
         dataService.closeRallyInProgress();
-        return ResponseEntity.ok().build();
+        return getSeasonInProgress();
     }
 
     @PostMapping("/match/add")
-    public ResponseEntity<Void> addMatch(@RequestBody JsonMatch match) {
+    public ResponseEntity<JsonSeason> addMatch(@RequestBody JsonMatchAdd match) {
         dataService.addMatch(match);
-        return ResponseEntity.ok().build();
+        return getSeasonInProgress();
     }
 
 }

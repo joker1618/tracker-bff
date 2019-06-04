@@ -1,17 +1,19 @@
 package com.stats.tracker.be.datalayer.wrc.repo;
 
 import com.stats.tracker.be.datalayer.wrc.entities.WrcCar;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcDriver;
 import com.stats.tracker.be.datalayer.wrc.entities.WrcRally;
 import com.stats.tracker.be.datalayer.wrc.entities.WrcSeason;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Repository
 public interface WrcRallyRepo extends JpaRepository<WrcRally, Long> {
 
-    @Query(value = "select c from WrcRally c where c.inProgress = true")
+    @Query(value = "select c from WrcRally c where c.winner is null")
     WrcRally getRallyInProgress();
 
 

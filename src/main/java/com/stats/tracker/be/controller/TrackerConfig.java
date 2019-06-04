@@ -7,6 +7,7 @@ import com.stats.tracker.be.datalayer.wrc.entities.WrcSurface;
 import com.stats.tracker.be.exception.GenericException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import xxx.joker.libs.core.files.JkFiles;
 import xxx.joker.libs.core.lambdas.JkStreams;
 import xxx.joker.libs.core.utils.JkStrings;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -84,7 +86,7 @@ public class TrackerConfig extends AbstractController {
     }
 
     @GetMapping("/initModel")
-    public String initModel() {
+    public String initModel() throws IOException {
         if(!carRepo.findAll().isEmpty()) {
             return "Already initialized";
         }
@@ -97,7 +99,7 @@ public class TrackerConfig extends AbstractController {
         groundTypeRepo.saveAll(loadGroundTypes());
         stageRepo.saveAll(loadStages());
 
-        List<WrcMatch> wrcMatches = loadMatches();
+        loadAllMatches();
 
         return "Initialization donee";
     }
@@ -194,8 +196,8 @@ public class TrackerConfig extends AbstractController {
         return toRet;
     }
 
-    private List<WrcGroundType> loadGroundTypes() {
-        List<String> lines = JkFiles.readLines(getClass().getClassLoader().getResourceAsStream(FN_GROUND_TYPES));
+    private List<WrcGroundType> loadGroundTypes() throws IOException {
+        List<String> lines = JkFiles.readLines(new ClassPathResource(FN_GROUND_TYPES).getInputStream());
         List<WrcGroundType> toRet = new ArrayList<>();
         for (String line : lines) {
             toRet.add(new WrcGroundType(line));
@@ -203,15 +205,15 @@ public class TrackerConfig extends AbstractController {
         return toRet;
     }
 
-    private List<WrcMatch> loadMatches() {
-        List<String> lines = JkFiles.readLines(getClass().getClassLoader().getResourceAsStream(FN_MATCHES));
+    private void loadAllMatches() throws IOException {
+        List<String> lines = JkFiles.readLines(new ClassPathResource(FN_MATCHES).getInputStream());
+//        List<String> lines = JkFiles.readLines(getClass().getClassLoader().getResourceAsStream(FN_MATCHES));
         lines.remove(0);
         WrcSeason season = null;
         long prevSeason = -1;
         long prevRally = -1;
         WrcRally rally = null;
 
-        List<WrcMatch> toRet = new ArrayList<>();
         for (String line : lines) {
             String[] row = JkStrings.splitArr(line, "|");
             WrcMatch match = new WrcMatch();
@@ -222,13 +224,11 @@ public class TrackerConfig extends AbstractController {
 
             if(prevRally != rallyId) {
                 if(rally != null) {
-                    rally.setInProgress(false);
                     rallyRepo.save(rally);
-//                    rally.setSeason(season);
                     season.getRallies().add(rally);
                 }
                 rally = new WrcRally();
-                rally.setInProgress(true);
+                rally.setWinner(driverRepo.findByName(row[14]));
                 rally.setCountry(country);
                 prevRally = rallyId;
             }
@@ -237,8 +237,12 @@ public class TrackerConfig extends AbstractController {
                 if(season != null) {
                     seasonRepo.save(season);
                 }
-                season = new WrcSeason();
-                season.setInProgress(!Boolean.valueOf(row[11]));
+                season = seasonRepo.save(new WrcSeason());
+                season.setStartTm(LocalDateTime.parse(row[12]));
+                if(StringUtils.isNotBlank(row[13])) {
+                    season.setEndTm(LocalDateTime.parse(row[13]));
+                    season.setWinner(driverRepo.findByName(row[15]));
+                }
                 prevSeason = seasonId;
             }
 
@@ -252,33 +256,25 @@ public class TrackerConfig extends AbstractController {
             match.setWeather(weatherRepo.findByName(row[7].replace("_", " ")));
             match.setRaceTime(raceTimeRepo.findByName(row[8]));
             match.setMatchTime(LocalDateTime.parse(row[9]));
-//            matchRepo.save(match);
-//            match.setRally(rally);
+            matchRepo.save(match);
 
             rally.getMatches().add(match);
         }
 
         if(rally != null) {
-            rally.setInProgress(true);
-//            rallyRepo.save(rally);
-//            rally.setSeason(season);
             season.getRallies().add(rally);
             seasonRepo.save(season);
         }
 
+        // Set rallyID and seasonID
+        for (WrcSeason s : seasonRepo.findAll()) {
+            for (WrcRally r : s.getRallies()) {
+                r.getMatches().forEach(m -> m.setRallyId(r.getId()));
+                r.setSeasonId(s.getId());
+            }
+            seasonRepo.save(s);
+        }
 
-//        WrcSeason last = null;
-//        for (WrcSeason s : seasonRepo.findAll()) {
-//            Optional<WrcMatch> max = s.getRallies().stream().flatMap(r -> r.getMatches().stream()).max(Comparator.comparing(WrcMatch::getMatchTime));
-//            last = seasonRepo.save(s);
-//        }
-//
-//        if(openedSeason)    {
-//            last.setEndTime(null);
-//            seasonRepo.save(last);
-//        }
-
-        return toRet;
     }
 
 

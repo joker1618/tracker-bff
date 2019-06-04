@@ -3,6 +3,7 @@ package caller;
 import com.stats.tracker.be.datalayer.wrc.entities.*;
 import com.stats.tracker.be.datalayer.wrc.entities.WrcGroundType;
 import com.stats.tracker.be.datalayer.wrc.entities.WrcSurface;
+import com.stats.tracker.be.restModel.out.ErrorResponse;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -51,13 +52,16 @@ public class InfoCaller {
         ResponseEntity response = restTemplate.getForEntity(
                 "http://localhost:666/wrc/config/c",
                 Object.class);
-//        ResponseEntity<WrcWeather> response = restTemplate.exchange(
-//                "http://localhost:666/wrc/config/c",.c
-//                HttpMethod.GET,
-//                null,
-//                new ParameterizedTypeReference<WrcWeather>(){});
         display(response);
         display(response.getBody());
+
+        ResponseEntity<WrcWeather> response1 = restTemplate.exchange(
+                "http://localhost:666/wrc/config/c",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<WrcWeather>(){});
+        display(response1);
+        display(response1.getBody());
     }
 
     @Test

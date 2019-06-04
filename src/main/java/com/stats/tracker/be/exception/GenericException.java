@@ -20,11 +20,11 @@ public class GenericException extends RuntimeException {
         this.errorMessage = strf(mexFormat, params);
     }
     public GenericException(String mexFormat, Object... params) {
-        this.status = HttpStatus.INTERNAL_SERVER_ERROR;
+        this.status = HttpStatus.BAD_REQUEST;
         this.errorMessage = strf(mexFormat, params);
     }
     public GenericException(Throwable t, String mexFormat, Object... params) {
-        this.status = HttpStatus.INTERNAL_SERVER_ERROR;
+        this.status = HttpStatus.BAD_REQUEST;
         this.errorMessage = strf(mexFormat, params);
         this.cause = t;
     }

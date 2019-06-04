@@ -17,15 +17,16 @@ public class WrcRally extends AbstractEntity implements Serializable {
     @ManyToOne
     private WrcCountry country;
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<WrcMatch> matches = new ArrayList<>();
-    @NotNull
-    private boolean inProgress;
-//    @ManyToOne
-//    private WrcSeason season;
+    private List<WrcMatch> matches;
+    private long seasonId;
+    @ManyToOne
+    private WrcDriver winner;
+
+
 
 
     public WrcRally() {
-
+        matches = new ArrayList<>();
     }
 
 
@@ -49,19 +50,22 @@ public class WrcRally extends AbstractEntity implements Serializable {
         this.country = country;
     }
 
-    public boolean isInProgress() {
-        return inProgress;
+    public long getSeasonId() {
+        return seasonId;
     }
 
-//    public WrcSeason getSeason() {
-//        return season;
-//    }
-//
-//    public void setSeason(WrcSeason season) {
-//        this.season = season;
-//    }
+    public void setSeasonId(long seasonId) {
+        this.seasonId = seasonId;
+    }
 
-    public void setInProgress(boolean inProgress) {
-        this.inProgress = inProgress;
+    public WrcDriver getWinner() {
+        return winner;
+    }
+    public boolean hasWinner() {
+        return winner != null;
+    }
+
+    public void setWinner(WrcDriver winner) {
+        this.winner = winner;
     }
 }

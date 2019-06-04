@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WrcSeasonRepo extends JpaRepository<WrcSeason, Long> {
 
-    @Query(value = "select c from WrcSeason c where c.inProgress = true")
+    @Query(value = "select c from WrcSeason c where c.endTm is null")
     WrcSeason getSeasonInProgress();
 
 }

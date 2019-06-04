@@ -1,5 +1,6 @@
 package com.stats.tracker.be.config;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.Instant;
 
+import static xxx.joker.libs.core.utils.JkStrings.strf;
+
 @Component
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 
@@ -18,7 +21,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        logger.info("BEFORE request [{}, {}]", request.getMethod(), request.getRequestURL().toString());
+        logger.info("BEFORE {}", reqToStr(request));
         request.setAttribute("startTime", System.currentTimeMillis());
         return true;
     }
@@ -28,7 +31,15 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
         long startTime = (Long) request.getAttribute("startTime");
         long elapsedTime = System.currentTimeMillis() - startTime;
         String strElapsed = JkDuration.toStringElapsed(elapsedTime);
-        logger.info("AFTER request [{}, {}]: elapsed time: {}", request.getMethod(), request.getRequestURL().toString(), strElapsed);
+        logger.info("AFTER {}: elapsed time: {}", reqToStr(request), strElapsed);
+    }
+
+    private String reqToStr(HttpServletRequest request) {
+        String url = request.getRequestURL().toString();
+        if(StringUtils.isNotBlank(request.getQueryString())) {
+            url += "?" + request.getQueryString();
+        }
+        return strf("request [{}, {}]", request.getMethod(), url);
     }
 
 }

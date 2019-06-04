@@ -1,7 +1,7 @@
 package com.stats.tracker.be.controller;
 
 import com.stats.tracker.be.exception.GenericException;
-import com.stats.tracker.be.restModel.ErrorResponse;
+import com.stats.tracker.be.restModel.out.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
