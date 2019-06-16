@@ -1,9 +1,8 @@
 package com.stats.tracker.be.controller;
 
 import com.stats.tracker.be.datalayer.wrc.RepoManager;
-import com.stats.tracker.be.datalayer.wrc.jkrepo.Wrc6Repo;
-import com.stats.tracker.be.datalayer.wrc.jkrepo.entities.*;
-import com.stats.tracker.be.datalayer.wrc.jpa.entities.*;
+import com.stats.tracker.be.datalayer.wrc.entities.*;
+import com.stats.tracker.be.datalayer.wrc.repo.Wrc6Repo;
 import com.stats.tracker.be.exception.GenericException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +10,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import xxx.joker.libs.core.datetime.JkDateTime;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import xxx.joker.libs.core.files.JkFiles;
 import xxx.joker.libs.core.lambdas.JkStreams;
-import xxx.joker.libs.core.runtimes.JkReflection;
 import xxx.joker.libs.core.utils.JkStrings;
 import xxx.joker.libs.repository.design.RepoEntity;
 import xxx.joker.libs.repository.util.RepoUtil;
@@ -91,8 +90,8 @@ public class DevController extends AbstractController {
         SpringApplication.exit(context);
     }
 
-    @GetMapping("/initModelJPA")
-    public String initModel() throws IOException {
+    @GetMapping("/initJpa")
+    public String initJpa() throws IOException {
         if(!carRepo.findAll().isEmpty()) {
             return "JPA model already initialized";
         }
@@ -110,131 +109,57 @@ public class DevController extends AbstractController {
         return "Initialized model JPA";
     }
 
-    @GetMapping("/initJkRepoFromJPA")
-    public String initJkRepoFromJPA(@RequestParam(required = false, defaultValue = "false") boolean commit) throws IOException {
-        Map<Long, RepoEntity> jpaToRepoMap = new HashMap<>();
-
+    @GetMapping("/jpaToRepo")
+    public String jpaToRepo() throws IOException {
         Wrc6Repo repoWrc6 = repoManager.getWrc6Repo();
 
-        List<WrcCar> allCars = carRepo.findAll();
-        for (WrcCar car : allCars) {
-            WrcCar6 car6 = JkReflection.copyFields(car, WrcCar6.class);
-            car6 = repoWrc6.getByPkOrAdd(car6);
-            jpaToRepoMap.put(car.getId(), car6);
-        }
+        repoWrc6.clearDataSets();
 
-        List<WrcCountry> allCountries = countryRepo.findAll();
-        for (WrcCountry country : allCountries) {
-            WrcCountry6 country6 = JkReflection.copyFields(country, WrcCountry6.class);
-            country6 = repoWrc6.getByPkOrAdd(country6);
-            jpaToRepoMap.put(country.getId(), country6);
-        }
+        carRepo.findAll().forEach(repoWrc6::add);
+        driverRepo.findAll().forEach(repoWrc6::add);
+        weatherRepo.findAll().forEach(repoWrc6::add);
+        raceTimeRepo.findAll().forEach(repoWrc6::add);
+        countryRepo.findAll().forEach(repoWrc6::add);
+        groundTypeRepo.findAll().forEach(repoWrc6::add);
+        groundMixRepo.findAll().forEach(repoWrc6::add);
+        surfaceRepo.findAll().forEach(repoWrc6::add);
+        stageRepo.findAll().forEach(repoWrc6::add);
+        matchRepo.findAll().forEach(repoWrc6::add);
+        rallyRepo.findAll().forEach(repoWrc6::add);
+        seasonRepo.findAll().forEach(repoWrc6::add);
 
-        List<WrcRaceTime> allRaceTimes = raceTimeRepo.findAll();
-        for (WrcRaceTime raceTime : allRaceTimes) {
-            WrcRaceTime6 raceTime6 = JkReflection.copyFields(raceTime, WrcRaceTime6.class);
-            raceTime6 = repoWrc6.getByPkOrAdd(raceTime6);
-            jpaToRepoMap.put(raceTime.getId(), raceTime6);
-        }
+        repoWrc6.commit();
 
-        List<WrcWeather> allWeathers = weatherRepo.findAll();
-        for (WrcWeather weather : allWeathers) {
-            WrcWeather6 weather6 = JkReflection.copyFields(weather, WrcWeather6.class);
-            weather6 = repoWrc6.getByPkOrAdd(weather6);
-            jpaToRepoMap.put(weather.getId(), weather6);
-        }
 
-        List<WrcGroundType> allGroundTypes = groundTypeRepo.findAll();
-        for (WrcGroundType groundType : allGroundTypes) {
-            WrcGroundType6 groundType6 = JkReflection.copyFields(groundType, WrcGroundType6.class);
-            groundType6 = repoWrc6.getByPkOrAdd(groundType6);
-            jpaToRepoMap.put(groundType.getId(), groundType6);
-        }
+        return "END";
+    }
 
-        List<WrcDriver> allDrivers = driverRepo.findAll();
-        for (WrcDriver driver : allDrivers) {
-            WrcDriver6 driver6 = JkReflection.copyFields(driver, WrcDriver6.class);
-            driver6 = repoWrc6.getByPkOrAdd(driver6);
-            jpaToRepoMap.put(driver.getId(), driver6);
-        }
+    @GetMapping("/repoToJpa")
+    public String repoToJpa() throws IOException {
+        Wrc6Repo repoWrc6 = repoManager.getWrc6Repo();
 
-        List<WrcGroundMix> allGroundMixs = groundMixRepo.findAll();
-        for (WrcGroundMix groundMix : allGroundMixs) {
-            WrcGroundMix6 groundMix6 = JkReflection.copyFields(groundMix, WrcGroundMix6.class);
-            groundMix6.setGroundType((WrcGroundType6)jpaToRepoMap.get(groundMix.getGroundType().getId()));
-            groundMix6 = repoWrc6.getByPkOrAdd(groundMix6);
-            jpaToRepoMap.put(groundMix.getId(), groundMix6);
-        }
+        carRepo.saveAll(repoWrc6.getDataList(WrcCar.class));
+        driverRepo.saveAll(repoWrc6.getDataList(WrcDriver.class));
+        weatherRepo.saveAll(repoWrc6.getDataList(WrcWeather.class));
+        raceTimeRepo.saveAll(repoWrc6.getDataList(WrcRaceTime.class));
+        countryRepo.saveAll(repoWrc6.getDataList(WrcCountry.class));
+        groundTypeRepo.saveAll(repoWrc6.getDataList(WrcGroundType.class));
+        groundMixRepo.saveAll(repoWrc6.getDataList(WrcGroundMix.class));
+        surfaceRepo.saveAll(repoWrc6.getDataList(WrcSurface.class));
+        stageRepo.saveAll(repoWrc6.getDataList(WrcStage.class));
+        matchRepo.saveAll(repoWrc6.getDataList(WrcMatch.class));
+        rallyRepo.saveAll(repoWrc6.getDataList(WrcRally.class));
+        seasonRepo.saveAll(repoWrc6.getDataList(WrcSeason.class));
 
-        List<WrcSurface> allSurfaces = surfaceRepo.findAll();
-        for (WrcSurface surface : allSurfaces) {
-            WrcSurface6 surface6 = JkReflection.copyFields(surface, WrcSurface6.class);
-            surface6.setPrimaryGround((WrcGroundMix6)jpaToRepoMap.get(surface.getPrimaryGround().getId()));
-            if(surface.getSecondaryGround() != null) {
-                surface6.setSecondaryGround((WrcGroundMix6) jpaToRepoMap.get(surface.getSecondaryGround().getId()));
-            }
-            surface6 = repoWrc6.getByPkOrAdd(surface6);
-            jpaToRepoMap.put(surface.getId(), surface6);
-        }
+        return "END";
+    }
 
-        List<WrcStage> allStages = stageRepo.findAll();
-        for (WrcStage stage : allStages) {
-            WrcStage6 stage6 = JkReflection.copyFields(stage, WrcStage6.class);
-            stage6.setCountry((WrcCountry6) jpaToRepoMap.get(stage.getCountry().getId()));
-            stage6.setSurface((WrcSurface6) jpaToRepoMap.get(stage.getSurface().getId()));
-            stage6 = repoWrc6.getByPkOrAdd(stage6);
-            jpaToRepoMap.put(stage.getId(), stage6);
-        }
-
-        List<WrcMatch> allMatchs = matchRepo.findAll();
-        for (WrcMatch match : allMatchs) {
-            WrcMatch6 match6 = JkReflection.copyFields(match, WrcMatch6.class);
-            match6.setWeather((WrcWeather6) jpaToRepoMap.get(match.getWeather().getId()));
-            match6.setRaceTime((WrcRaceTime6) jpaToRepoMap.get(match.getRaceTime().getId()));
-            if(match.getCarFede() != null) {
-                match6.setCarFede((WrcCar6) jpaToRepoMap.get(match.getCarFede().getId()));
-                match6.setCarBomber((WrcCar6) jpaToRepoMap.get(match.getCarBomber().getId()));
-            }
-            match6.setWinner((WrcDriver6) jpaToRepoMap.get(match.getWinner().getId()));
-            match6.setStage((WrcStage6) jpaToRepoMap.get(match.getStage().getId()));
-            match6.setCreationTm(JkDateTime.of(match.getMatchTime()));
-
-            match6 = repoWrc6.getByPkOrAdd(match6);
-            jpaToRepoMap.put(match.getId(), match6);
-        }
-
-        List<WrcRally> allRallys = rallyRepo.findAll();
-        for (WrcRally rally : allRallys) {
-            WrcRally6 rally6 = JkReflection.copyFields(rally, WrcRally6.class);
-            rally6.setCountry((WrcCountry6)jpaToRepoMap.get(rally.getCountry().getId()));
-            rally6.setWinner((WrcDriver6) jpaToRepoMap.get(rally.getWinner().getId()));
-            List<WrcMatch6> matches6 = JkStreams.map(rally.getMatches(), m -> (WrcMatch6) jpaToRepoMap.get(m.getId()));
-            rally6.setMatches(matches6);
-            rally6 = repoWrc6.getByPkOrAdd(rally6);
-            jpaToRepoMap.put(rally.getId(), rally6);
-        }
-
-        List<WrcSeason> allSeasons = seasonRepo.findAll();
-        for (WrcSeason season : allSeasons) {
-            WrcSeason6 season6 = JkReflection.copyFields(season, WrcSeason6.class);
-            if(season.getWinner() != null){
-                season6.setWinner((WrcDriver6) jpaToRepoMap.get(season.getWinner().getId()));
-            }
-            List<WrcRally6> rallies6 = JkStreams.map(season.getRallies(), r -> (WrcRally6) jpaToRepoMap.get(r.getId()));
-            season6.setRallies(rallies6);
-            season6 = repoWrc6.getByPkOrAdd(season6);
-            jpaToRepoMap.put(season.getId(), season6);
-        }
-
-        for (Set<RepoEntity> value : repoWrc6.getDataSets().values()) {
-            display(RepoUtil.formatEntities(value)+"\n\n");
-        }
-
-        if(commit) {
-            repoWrc6.commit();
-        }
-
-        return "Initialized repo from JPA";
+    @GetMapping("/showRepo")
+    public String showRepo() throws IOException {
+        Collection<Set<RepoEntity>> values = repoManager.getWrc6Repo().getDataSets().values();
+        String strJoin = JkStreams.join(values, "\n\n", RepoUtil::formatEntities);
+        display(strJoin);
+        return  strJoin;
     }
 
     private List<WrcCar> loadCars() {

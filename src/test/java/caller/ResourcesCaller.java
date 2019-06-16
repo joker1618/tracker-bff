@@ -9,8 +9,6 @@ import xxx.joker.libs.core.files.JkFiles;
 
 import java.nio.file.Paths;
 
-import static xxx.joker.libs.core.utils.JkConsole.display;
-
 public class ResourcesCaller {
 
     @Test

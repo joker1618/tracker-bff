@@ -1,6 +1,6 @@
 package com.stats.tracker.be.service;
 
-import com.stats.tracker.be.datalayer.wrc.jpa.entities.WrcMatch;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcMatch;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

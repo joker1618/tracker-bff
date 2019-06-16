@@ -2,7 +2,6 @@ package com.stats.tracker.be.restModel.out.entities;
 
 import com.stats.tracker.be.restModel.AbstractJsonEntity;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class JsonWrcCountry extends AbstractJsonEntity implements Serializable {

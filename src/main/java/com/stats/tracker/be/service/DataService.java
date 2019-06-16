@@ -1,7 +1,6 @@
 package com.stats.tracker.be.service;
 
-import com.stats.tracker.be.datalayer.wrc.jpa.entities.*;
-import com.stats.tracker.be.datalayer.wrc.jpa.entities.*;
+import com.stats.tracker.be.datalayer.wrc.entities.*;
 import com.stats.tracker.be.exception.GenericException;
 import com.stats.tracker.be.restModel.in.JsonMatchAdd;
 import com.stats.tracker.be.restModel.out.JsonSeason;
@@ -91,7 +90,7 @@ public class DataService extends AbstractService {
         return getWinner(map);
     }
 
-    private <T extends AbstractEntity> WrcDriver getWinner(Map<WrcDriver, List<T>> map) {
+    private <T extends JpaEntity> WrcDriver getWinner(Map<WrcDriver, List<T>> map) {
         WrcDriver fede = driverRepo.getFede();
         WrcDriver bomber = driverRepo.getBomber();
         int wf = collSize(map.get(fede));

@@ -1,9 +1,9 @@
 package com.stats.tracker.be.service;
 
-import com.stats.tracker.be.datalayer.wrc.jpa.entities.WrcDriver;
-import com.stats.tracker.be.datalayer.wrc.jpa.entities.WrcMatch;
-import com.stats.tracker.be.datalayer.wrc.jpa.entities.WrcRally;
-import com.stats.tracker.be.datalayer.wrc.jpa.entities.WrcSeason;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcDriver;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcMatch;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcRally;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcSeason;
 import com.stats.tracker.be.restModel.in.JsonMatchAdd;
 import com.stats.tracker.be.restModel.out.JsonSeason;
 import com.stats.tracker.be.restModel.out.JsonStat;

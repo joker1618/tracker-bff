@@ -1,14 +1,12 @@
 package com.stats.tracker.be.datalayer.wrc;
 
 import com.stats.tracker.be.config.AppConfig;
-import com.stats.tracker.be.datalayer.wrc.jkrepo.Wrc6Repo;
-import com.stats.tracker.be.datalayer.wrc.jkrepo.Wrc6RepoImpl;
+import com.stats.tracker.be.datalayer.wrc.repo.Wrc6Repo;
+import com.stats.tracker.be.datalayer.wrc.repo.Wrc6RepoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import xxx.joker.libs.core.cache.JkCache;
 import xxx.joker.libs.repository.JkRepo;
-import xxx.joker.libs.repository.JkRepoFile;
-import xxx.joker.libs.repository.design.RepoEntity;
 
 @Repository
 public class RepoManager {

@@ -1,6 +1,6 @@
 package vari;
 
-import com.stats.tracker.be.datalayer.wrc.jpa.entities.WrcCar;
+import com.stats.tracker.be.datalayer.wrc.entities.WrcCar;
 import org.junit.Test;
 import xxx.joker.libs.core.files.JkFiles;
 
