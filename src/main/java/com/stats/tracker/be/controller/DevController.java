@@ -324,15 +324,6 @@ public class DevController extends AbstractController {
             seasonRepo.save(season);
         }
 
-        // Set rallyID and seasonID
-        for (WrcSeason s : seasonRepo.findAll()) {
-            for (WrcRally r : s.getRallies()) {
-                r.getMatches().forEach(m -> m.setRallyId(r.getId()));
-                r.setSeasonId(s.getId());
-            }
-            seasonRepo.save(s);
-        }
-
     }
 
 

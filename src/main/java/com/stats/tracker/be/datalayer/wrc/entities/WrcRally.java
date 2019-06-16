@@ -23,8 +23,6 @@ public class WrcRally extends JpaEntity implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<WrcMatch> matches;
     @RepoField
-    private long seasonId;
-    @RepoField
     @ManyToOne
     private WrcDriver winner;
 
@@ -56,14 +54,6 @@ public class WrcRally extends JpaEntity implements Serializable {
         this.country = country;
     }
 
-    public long getSeasonId() {
-        return seasonId;
-    }
-
-    public void setSeasonId(long seasonId) {
-        this.seasonId = seasonId;
-    }
-
     public WrcDriver getWinner() {
         return winner;
     }
@@ -77,6 +67,6 @@ public class WrcRally extends JpaEntity implements Serializable {
 
     @Override
     public String getPrimaryKey() {
-        return "rally-" + getEntityID();
+        return "rally-" + entityID;
     }
 }

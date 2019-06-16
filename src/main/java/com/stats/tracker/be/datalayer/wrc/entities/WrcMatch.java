@@ -39,8 +39,6 @@ public class WrcMatch extends JpaEntity implements Serializable {
     @NotNull
     @ManyToOne
     private WrcStage stage;
-    @RepoField
-    private long rallyId;
 
 
 
@@ -106,14 +104,6 @@ public class WrcMatch extends JpaEntity implements Serializable {
 
     public void setMatchTime(LocalDateTime matchTime) {
         this.matchTime = matchTime;
-    }
-
-    public long getRallyId() {
-        return rallyId;
-    }
-
-    public void setRallyId(long rallyId) {
-        this.rallyId = rallyId;
     }
 
     @Override

@@ -40,9 +40,6 @@ public class WrcSeason extends JpaEntity implements Serializable {
         this.rallies = rallies;
     }
 
-
-
-
     public long getId() {
         return id;
     }
