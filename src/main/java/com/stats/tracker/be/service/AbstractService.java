@@ -1,6 +1,6 @@
 package com.stats.tracker.be.service;
 
-import com.stats.tracker.be.datalayer.wrc.repo.*;
+import com.stats.tracker.be.datalayer.wrc.jpa.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 

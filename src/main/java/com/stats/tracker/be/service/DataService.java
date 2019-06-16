@@ -1,6 +1,7 @@
 package com.stats.tracker.be.service;
 
-import com.stats.tracker.be.datalayer.wrc.entities.*;
+import com.stats.tracker.be.datalayer.wrc.jpa.entities.*;
+import com.stats.tracker.be.datalayer.wrc.jpa.entities.*;
 import com.stats.tracker.be.exception.GenericException;
 import com.stats.tracker.be.restModel.in.JsonMatchAdd;
 import com.stats.tracker.be.restModel.out.JsonSeason;

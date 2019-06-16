@@ -1,6 +1,7 @@
 package com.stats.tracker.be.controller;
 
-import com.stats.tracker.be.datalayer.wrc.entities.*;
+import com.stats.tracker.be.datalayer.wrc.jpa.entities.*;
+import com.stats.tracker.be.datalayer.wrc.jpa.entities.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,11 +52,6 @@ public class InfoController extends AbstractController {
     public ResponseEntity<List<WrcStage>> getStages() {
         return ResponseEntity.ok(stageRepo.findAll());
     }
-    @GetMapping("/stage0")
-    public ResponseEntity<WrcStage> getStage0() {
-        List<WrcStage> all = stageRepo.findAll();
-        return ResponseEntity.ok(all.isEmpty() ? null : all.get(0));
-    }
 
     @GetMapping("/seasons")
     public ResponseEntity<List<WrcSeason>> getSeasons() {
@@ -70,10 +66,6 @@ public class InfoController extends AbstractController {
     @GetMapping("/matches")
     public ResponseEntity<List<WrcMatch>> getMatches() {
         return ResponseEntity.ok(matchRepo.findAll());
-    }
-    @GetMapping("/match0")
-    public ResponseEntity<WrcMatch> getMatch0() {
-        return ResponseEntity.ok(matchRepo.findAll().get(0));
     }
 
 

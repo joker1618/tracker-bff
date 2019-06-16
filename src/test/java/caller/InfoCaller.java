@@ -1,9 +1,7 @@
 package caller;
 
-import com.stats.tracker.be.datalayer.wrc.entities.*;
-import com.stats.tracker.be.datalayer.wrc.entities.WrcGroundType;
-import com.stats.tracker.be.datalayer.wrc.entities.WrcSurface;
-import com.stats.tracker.be.restModel.out.ErrorResponse;
+import com.stats.tracker.be.datalayer.wrc.jpa.entities.*;
+import com.stats.tracker.be.datalayer.wrc.jpa.entities.*;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;

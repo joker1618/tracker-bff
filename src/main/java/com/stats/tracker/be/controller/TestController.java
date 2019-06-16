@@ -1,8 +1,7 @@
 package com.stats.tracker.be.controller;
 
-import com.stats.tracker.be.datalayer.wrc.entities.*;
-import com.stats.tracker.be.datalayer.wrc.entities.WrcGroundType;
-import com.stats.tracker.be.datalayer.wrc.entities.WrcSurface;
+import com.stats.tracker.be.datalayer.wrc.jpa.entities.*;
+import com.stats.tracker.be.datalayer.wrc.jpa.entities.WrcSurface;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

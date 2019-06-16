@@ -1,7 +1,7 @@
 package com.stats.tracker.be.restModel.out;
 
-import com.stats.tracker.be.datalayer.wrc.entities.WrcCountry;
-import com.stats.tracker.be.datalayer.wrc.entities.WrcRally;
+import com.stats.tracker.be.datalayer.wrc.jpa.entities.WrcCountry;
+import com.stats.tracker.be.datalayer.wrc.jpa.entities.WrcRally;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
