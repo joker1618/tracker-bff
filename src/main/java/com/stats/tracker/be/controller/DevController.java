@@ -113,7 +113,7 @@ public class DevController extends AbstractController {
     public String jpaToRepo() throws IOException {
         Wrc6Repo repoWrc6 = repoManager.getWrc6Repo();
 
-        repoWrc6.clearDataSets();
+        repoWrc6.clearAll();
 
         carRepo.findAll().forEach(repoWrc6::add);
         driverRepo.findAll().forEach(repoWrc6::add);
@@ -138,18 +138,18 @@ public class DevController extends AbstractController {
     public String repoToJpa() throws IOException {
         Wrc6Repo repoWrc6 = repoManager.getWrc6Repo();
 
-        carRepo.saveAll(repoWrc6.getDataList(WrcCar.class));
-        driverRepo.saveAll(repoWrc6.getDataList(WrcDriver.class));
-        weatherRepo.saveAll(repoWrc6.getDataList(WrcWeather.class));
-        raceTimeRepo.saveAll(repoWrc6.getDataList(WrcRaceTime.class));
-        countryRepo.saveAll(repoWrc6.getDataList(WrcCountry.class));
-        groundTypeRepo.saveAll(repoWrc6.getDataList(WrcGroundType.class));
-        groundMixRepo.saveAll(repoWrc6.getDataList(WrcGroundMix.class));
-        surfaceRepo.saveAll(repoWrc6.getDataList(WrcSurface.class));
-        stageRepo.saveAll(repoWrc6.getDataList(WrcStage.class));
-        matchRepo.saveAll(repoWrc6.getDataList(WrcMatch.class));
-        rallyRepo.saveAll(repoWrc6.getDataList(WrcRally.class));
-        seasonRepo.saveAll(repoWrc6.getDataList(WrcSeason.class));
+        carRepo.saveAll(repoWrc6.getList(WrcCar.class));
+        driverRepo.saveAll(repoWrc6.getList(WrcDriver.class));
+        weatherRepo.saveAll(repoWrc6.getList(WrcWeather.class));
+        raceTimeRepo.saveAll(repoWrc6.getList(WrcRaceTime.class));
+        countryRepo.saveAll(repoWrc6.getList(WrcCountry.class));
+        groundTypeRepo.saveAll(repoWrc6.getList(WrcGroundType.class));
+        groundMixRepo.saveAll(repoWrc6.getList(WrcGroundMix.class));
+        surfaceRepo.saveAll(repoWrc6.getList(WrcSurface.class));
+        stageRepo.saveAll(repoWrc6.getList(WrcStage.class));
+        matchRepo.saveAll(repoWrc6.getList(WrcMatch.class));
+        rallyRepo.saveAll(repoWrc6.getList(WrcRally.class));
+        seasonRepo.saveAll(repoWrc6.getList(WrcSeason.class));
 
         return "END";
     }
