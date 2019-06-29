@@ -1,6 +1,7 @@
 package com.stats.tracker.be.service;
 
-import com.stats.tracker.be.datalayer.wrc.entities.*;
+import com.stats.tracker.be.datalayer.JpaEntity;
+import com.stats.tracker.be.datalayer.wrc6.entities.*;
 import com.stats.tracker.be.exception.GenericException;
 import com.stats.tracker.be.restModel.in.JsonMatchAdd;
 import com.stats.tracker.be.restModel.out.JsonSeason;
@@ -79,7 +80,6 @@ public class DataService extends AbstractService {
         if(rp == null) {
             throw new GenericException("Unable to add match: rally in progress not found! {}", match);
         }
-        WrcMatch wrcMatch = jsonToModel.toModelJsonMatchAdd(match);
 
 //        throw new GenericException("Season already created!");
 

@@ -1,8 +1,8 @@
 package com.stats.tracker.be.controller;
 
-import com.stats.tracker.be.datalayer.wrc.entities.WrcCar;
-import com.stats.tracker.be.datalayer.wrc.entities.WrcCountry;
-import com.stats.tracker.be.datalayer.wrc.entities.WrcDriver;
+import com.stats.tracker.be.datalayer.wrc6.entities.WrcCar;
+import com.stats.tracker.be.datalayer.wrc6.entities.WrcCountry;
+import com.stats.tracker.be.datalayer.wrc6.entities.WrcDriver;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

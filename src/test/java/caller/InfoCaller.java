@@ -1,6 +1,6 @@
 package caller;
 
-import com.stats.tracker.be.datalayer.wrc.entities.*;
+import com.stats.tracker.be.datalayer.wrc6.entities.*;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;

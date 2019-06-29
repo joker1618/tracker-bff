@@ -1,7 +1,9 @@
 package com.stats.tracker.be.controller;
 
-import com.stats.tracker.be.datalayer.wrc.jpa.*;
+import com.stats.tracker.be.datalayer.RepoManager;
+import com.stats.tracker.be.datalayer.wrc6.jpa.*;
 import com.stats.tracker.be.service.DataService;
+import com.stats.tracker.be.service.JsonToModel;
 import com.stats.tracker.be.service.WrcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -12,6 +14,8 @@ abstract class AbstractController {
     protected WrcService wrcService;
     @Autowired
     protected DataService dataService;
+    @Autowired
+    private RepoManager repoManager;
 
     @Autowired
     protected WrcCarRepo carRepo;
@@ -37,6 +41,9 @@ abstract class AbstractController {
     protected WrcGroundMixRepo groundMixRepo;
     @Autowired
     protected WrcSurfaceRepo surfaceRepo;
+
+    @Autowired
+    protected JsonToModel jsonToModel;
 
     @Autowired
     protected ApplicationContext context;

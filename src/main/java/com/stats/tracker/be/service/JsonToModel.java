@@ -1,13 +1,15 @@
 package com.stats.tracker.be.service;
 
-import com.stats.tracker.be.datalayer.wrc.entities.WrcDriver;
-import com.stats.tracker.be.datalayer.wrc.entities.WrcMatch;
-import com.stats.tracker.be.datalayer.wrc.entities.WrcRally;
-import com.stats.tracker.be.datalayer.wrc.entities.WrcSeason;
-import com.stats.tracker.be.restModel.in.JsonMatchAdd;
+import com.stats.tracker.be.datalayer.JpaEntity;
+import com.stats.tracker.be.datalayer.wrc6.entities.*;
 import com.stats.tracker.be.restModel.out.JsonSeason;
 import com.stats.tracker.be.restModel.out.JsonStat;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class JsonToModel extends AbstractService {
@@ -49,8 +51,10 @@ public class JsonToModel extends AbstractService {
         return js;
     }
 
-    public WrcMatch toModelJsonMatchAdd(JsonMatchAdd json) {
-        // todo impl
-        return null;
+    public <T extends JpaEntity> JsonStat toJsonStat(String label, Map<WrcDriver, Collection<T>> map) {
+        List<T> el = Collections.emptyList();
+        int valFede = map.getOrDefault(driverRepo.getFede(), el).size();
+        int valBomber = map.getOrDefault(driverRepo.getBomber(), el).size();
+        return new JsonStat(label, valFede, valBomber);
     }
 }

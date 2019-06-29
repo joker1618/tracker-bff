@@ -1,8 +1,8 @@
 package com.stats.tracker.be.controller;
 
-import com.stats.tracker.be.datalayer.wrc.RepoManager;
-import com.stats.tracker.be.datalayer.wrc.entities.*;
-import com.stats.tracker.be.datalayer.wrc.repo.Wrc6Repo;
+import com.stats.tracker.be.datalayer.RepoManager;
+import com.stats.tracker.be.datalayer.wrc6.entities.*;
+import com.stats.tracker.be.datalayer.wrc6.repo.Wrc6Repo;
 import com.stats.tracker.be.exception.GenericException;
 import com.stats.tracker.be.restModel.out.JsonStat;
 import org.apache.commons.lang3.StringUtils;
@@ -51,10 +51,22 @@ public class DevController extends AbstractController {
 
     @GetMapping("/winStats")
     public ResponseEntity<JsonStat> getWinStats() {
-        Map<WrcDriver, List<WrcMatch>> map = JkStreams.toMap(matchRepo.findAll(), WrcMatch::getWinner);
-//        map.containsKey()
-        throw new GenericException(HttpStatus.PERMANENT_REDIRECT, "pippo {}", "pluto");
-//        throw new GenericException(new Exception("exc"), HttpStatus.BAD_REQUEST, "pippo {}", "pluto");
+
+        WrcDriver fede = driverRepo.getFede();
+        WrcDriver bomber = driverRepo.getBomber();
+        int valFede = matchRepo.numMatchesWin(fede);
+        int valBomber = matchRepo.numMatchesWin(bomber);
+//        int valFede = matchRepo.numMatchesWin(driverRepo.getFede());
+//        int valBomber = matchRepo.numMatchesWin(driverRepo.getBomber());
+//        display("num matches: {}", matchRepo.numMatchesWin(fede));
+//        display("num matches fede: {}", matchRepo.numMatchesWin(fede.getJpaID()));
+//        display("num matches bomber: {}", matchRepo.numMatchesWin(bomber.getJpaID()));
+//        display("num matches sss: {}", matchRepo.numMatchesWin(fede));
+        return ResponseEntity.ok(new JsonStat("Rallt win", valFede, valBomber));
+    }
+
+    private int numMatchesWin(List<WrcMatch> matches, WrcDriver driver) {
+        return JkStreams.filter(matches, m -> m.getWinner().equals(driver)).size();
     }
 
     @GetMapping("/null")
@@ -302,6 +314,15 @@ public class DevController extends AbstractController {
         }
 
     }
+
+//    private List<WrcGroundType> loadGroundTypes() throws IOException {
+//        List<String> lines = JkFiles.readLines(new ClassPathResource(FN_GROUND_TYPES).getInputStream());
+//        List<WrcGroundType> toRet = new ArrayList<>();
+//        for (String line : lines) {
+//            toRet.add(new WrcGroundType(line));
+//        }
+//        return toRet;
+//    }
 
 
 }

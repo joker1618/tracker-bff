@@ -1,6 +1,6 @@
 package com.stats.tracker.be.controller;
 
-import com.stats.tracker.be.datalayer.wrc.entities.WrcSurface;
+import com.stats.tracker.be.datalayer.wrc6.entities.WrcSurface;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +14,7 @@ public class TestController extends AbstractController {
 
     @GetMapping("/surf")
     public ResponseEntity<List<WrcSurface>> getTest() {
+
         return ResponseEntity.ok(surfaceRepo.getTest());
     }
 
