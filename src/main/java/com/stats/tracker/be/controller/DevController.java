@@ -27,7 +27,7 @@ import java.util.*;
 import static xxx.joker.libs.core.utils.JkConsole.display;
 
 @RestController
-@RequestMapping("config")
+@RequestMapping("dev")
 public class DevController extends AbstractController {
 
     private static final String SETUP_FILES_FOLDER = "setup";
