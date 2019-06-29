@@ -4,6 +4,7 @@ import com.stats.tracker.be.datalayer.wrc.RepoManager;
 import com.stats.tracker.be.datalayer.wrc.entities.*;
 import com.stats.tracker.be.datalayer.wrc.repo.Wrc6Repo;
 import com.stats.tracker.be.exception.GenericException;
+import com.stats.tracker.be.restModel.out.JsonStat;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -42,51 +43,26 @@ public class DevController extends AbstractController {
     @Autowired
     private RepoManager repoManager;
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello";
-    }
-
-    @GetMapping("/a")
-    public ResponseEntity<List<WrcDriver>> a() {
-        return ResponseEntity.ok(driverRepo.findAll());
-    }
-    @GetMapping("/b")
-    public ResponseEntity<List<WrcCountry>> b() {
-        return ResponseEntity.ok(countryRepo.findAll());
-    }
-    @GetMapping("/c")
-    public ResponseEntity<WrcWeather> c() {
-//        return ResponseEntity.ok(surfaceRepo.findAll());
+    @GetMapping("/genericException")
+    public ResponseEntity<WrcWeather> getGenericException() {
         throw new GenericException(HttpStatus.PERMANENT_REDIRECT, "pippo {}", "pluto");
 //        throw new GenericException(new Exception("exc"), HttpStatus.BAD_REQUEST, "pippo {}", "pluto");
     }
-    @GetMapping("/d")
-    public ResponseEntity<String> d() {
-        Wrc6Repo wrc6Repo = repoManager.getWrc6Repo();
-        return ResponseEntity.ok("<html><head></head><body><h1>fede</h1></body></html>");
+
+    @GetMapping("/winStats")
+    public ResponseEntity<JsonStat> getWinStats() {
+
+        throw new GenericException(HttpStatus.PERMANENT_REDIRECT, "pippo {}", "pluto");
+//        throw new GenericException(new Exception("exc"), HttpStatus.BAD_REQUEST, "pippo {}", "pluto");
     }
-    @GetMapping("/e")
-    public ResponseEntity<List<WrcStage>> e() {
-        return ResponseEntity.ok(stageRepo.getStages("italy"));
-    }
-//    @GetMapping("/en")
-//    public RestResponse<List> en() {
-//        return RestResponse.ok(stageRepo.getStages("italy"));
-//    }
-    @GetMapping("/f")
-    public ResponseEntity<List<WrcStage>> f() {
-        return ResponseEntity.ok(stageRepo.getStages("notExists"));
-    }
+
     @GetMapping("/null")
-    public ResponseEntity<Object> mnull() {
+    public ResponseEntity<Object> getNullResponse() {
         return ResponseEntity.ok(null);
     }
 
-
     @GetMapping("/shutdown")
     public void shutdown() {
-
         SpringApplication.exit(context);
     }
 
