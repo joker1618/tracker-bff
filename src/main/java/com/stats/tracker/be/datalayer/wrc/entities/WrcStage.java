@@ -13,7 +13,7 @@ public class WrcStage extends JpaEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long jpaID;
 
     @RepoField
     @NotNull
@@ -40,8 +40,8 @@ public class WrcStage extends JpaEntity implements Serializable {
     public WrcStage() {
     }
 
-    public long getId() {
-        return id;
+    public long getJpaID() {
+        return jpaID;
     }
 
     public WrcCountry getCountry() {

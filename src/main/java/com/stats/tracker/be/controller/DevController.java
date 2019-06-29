@@ -51,7 +51,8 @@ public class DevController extends AbstractController {
 
     @GetMapping("/winStats")
     public ResponseEntity<JsonStat> getWinStats() {
-
+        Map<WrcDriver, List<WrcMatch>> map = JkStreams.toMap(matchRepo.findAll(), WrcMatch::getWinner);
+//        map.containsKey()
         throw new GenericException(HttpStatus.PERMANENT_REDIRECT, "pippo {}", "pluto");
 //        throw new GenericException(new Exception("exc"), HttpStatus.BAD_REQUEST, "pippo {}", "pluto");
     }

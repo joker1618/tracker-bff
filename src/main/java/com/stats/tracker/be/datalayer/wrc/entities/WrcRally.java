@@ -13,7 +13,7 @@ public class WrcRally extends JpaEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long jpaID;
 
     @RepoField
     @NotNull
@@ -34,8 +34,8 @@ public class WrcRally extends JpaEntity implements Serializable {
     }
 
 
-    public long getId() {
-        return id;
+    public long getJpaID() {
+        return jpaID;
     }
 
     public List<WrcMatch> getMatches() {

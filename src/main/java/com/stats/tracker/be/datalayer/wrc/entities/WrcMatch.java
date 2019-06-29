@@ -12,7 +12,7 @@ public class WrcMatch extends JpaEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long jpaID;
 
     @RepoField
     @NotNull
@@ -54,8 +54,8 @@ public class WrcMatch extends JpaEntity implements Serializable {
         this.stage = stage;
     }
 
-    public long getId() {
-        return id;
+    public long getJpaID() {
+        return jpaID;
     }
 
     public WrcWeather getWeather() {

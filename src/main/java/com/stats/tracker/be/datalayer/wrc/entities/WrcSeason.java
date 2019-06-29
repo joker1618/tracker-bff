@@ -13,7 +13,7 @@ public class WrcSeason extends JpaEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long jpaID;
 
     @RepoField
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -40,8 +40,8 @@ public class WrcSeason extends JpaEntity implements Serializable {
         this.rallies = rallies;
     }
 
-    public long getId() {
-        return id;
+    public long getJpaID() {
+        return jpaID;
     }
 
     public LocalDateTime getStartTm() {

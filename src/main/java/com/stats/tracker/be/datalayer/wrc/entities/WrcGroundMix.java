@@ -13,7 +13,7 @@ public class WrcGroundMix extends JpaEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long jpaID;
 
     @RepoField
     @NotNull
@@ -32,8 +32,8 @@ public class WrcGroundMix extends JpaEntity implements Serializable {
         this.groundPerc = groundPerc;
     }
 
-    public long getId() {
-        return id;
+    public long getJpaID() {
+        return jpaID;
     }
 
     public WrcGroundType getGroundType() {

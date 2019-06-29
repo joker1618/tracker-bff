@@ -14,7 +14,7 @@ public class WrcDriver extends JpaEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long jpaID;
 
     @RepoField
     @NotNull
@@ -27,8 +27,8 @@ public class WrcDriver extends JpaEntity implements Serializable {
         this.name = name;
     }
 
-    public long getId() {
-        return id;
+    public long getJpaID() {
+        return jpaID;
     }
 
     public String getName() {

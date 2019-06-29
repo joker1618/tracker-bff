@@ -12,7 +12,7 @@ public class WrcGroundType extends JpaEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long jpaID;
 
     @RepoField
     @NotNull
@@ -25,8 +25,8 @@ public class WrcGroundType extends JpaEntity implements Serializable {
         this.groundType = groundType;
     }
 
-    public long getId() {
-        return id;
+    public long getJpaID() {
+        return jpaID;
     }
 
     public String getGroundType() {

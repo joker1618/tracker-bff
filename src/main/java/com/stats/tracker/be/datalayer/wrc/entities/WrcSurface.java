@@ -12,7 +12,7 @@ public class WrcSurface extends JpaEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long jpaID;
 
     @RepoField
     @ManyToOne
@@ -26,8 +26,8 @@ public class WrcSurface extends JpaEntity implements Serializable {
 
     }
 
-    public long getId() {
-        return id;
+    public long getJpaID() {
+        return jpaID;
     }
 
     public WrcGroundMix getPrimaryGround() {
