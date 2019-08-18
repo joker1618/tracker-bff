@@ -13,13 +13,13 @@ public class ResourcesCaller {
 
     @Test
     public void getFlag() {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<byte[]> response = restTemplate.exchange(
-                "http://localhost:666/wrc/resources/flag?countryName=United Kingdom",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<byte[]>(){});
-        JkFiles.writeFile(Paths.get("fedefiles.png"), response.getBody());
+//        RestTemplate restTemplate = new RestTemplate();
+//        ResponseEntity<byte[]> response = restTemplate.exchange(
+//                "http://localhost:666/wrc/resources/flag?countryName=United Kingdom",
+//                HttpMethod.GET,
+//                null,
+//                new ParameterizedTypeReference<byte[]>(){});
+//        JkFiles.writeFile(Paths.get("fedefiles.png"), response.getBody());
     }
 
 }

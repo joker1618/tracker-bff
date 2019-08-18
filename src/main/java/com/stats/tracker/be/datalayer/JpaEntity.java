@@ -2,9 +2,8 @@ package com.stats.tracker.be.datalayer;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import xxx.joker.libs.repository.design.RepoEntity;
 
-public abstract class JpaEntity extends RepoEntity {
+public abstract class JpaEntity {
 
     @Override
     public String toString() {

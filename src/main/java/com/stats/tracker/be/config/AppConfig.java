@@ -11,24 +11,24 @@ import java.nio.file.Paths;
 @Configuration
 public class AppConfig {
 
-    @Value("${jkrepo.db.folder.name:}")
-    private String dbFolderName;
-    @Value("${jkrepo.apps.folder}")
-    private String appsFolderName;
-    private boolean initialized = false;
-
-    private void initConfigs() {
-        if(StringUtils.isNotBlank(appsFolderName)) {
-            JkEnvironment.setAppsFolder(Paths.get(appsFolderName));
-        }
-    }
-
-    public Path getDbFolder() {
-        if(!initialized) {
-            initConfigs();
-            initialized = true;
-        }
-        return JkEnvironment.getAppsFolder().resolve(dbFolderName);
-    }
+//    @Value("${jkrepo.db.folder.name:}")
+//    private String dbFolderName;
+//    @Value("${jkrepo.apps.folder}")
+//    private String appsFolderName;
+//    private boolean initialized = false;
+//
+//    private void initConfigs() {
+//        if(StringUtils.isNotBlank(appsFolderName)) {
+//            JkEnvironment.setAppsFolder(Paths.get(appsFolderName));
+//        }
+//    }
+//
+//    public Path getDbFolder() {
+//        if(!initialized) {
+//            initConfigs();
+//            initialized = true;
+//        }
+//        return JkEnvironment.getAppsFolder().resolve(dbFolderName);
+//    }
 
 }

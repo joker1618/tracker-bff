@@ -6,7 +6,7 @@
 
     <groupId>com.stats.tracker</groupId>
     <artifactId>tracker-bff</artifactId>
-    <version>1.0</version>
+    <version>1.0-removeRepo</version>
     <packaging>jar</packaging>
 
     <parent>

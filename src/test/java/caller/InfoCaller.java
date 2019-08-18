@@ -13,16 +13,18 @@ import java.util.List;
 import static xxx.joker.libs.core.utils.JkConsole.display;
 
 public class InfoCaller {
+    
+    private static String BASE_URL = "http://localhost:666/bomber/wrc6";
 
     @Test
     public void showCars() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcCar>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/cars",
+        ResponseEntity<List<Wrc6Car>> response = restTemplate.exchange(
+                BASE_URL + "/info/cars",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcCar>>(){});
-        List<WrcCar> body = response.getBody();
+                new ParameterizedTypeReference<List<Wrc6Car>>(){});
+        List<Wrc6Car> body = response.getBody();
         display(response);
         display(response.getBody());
         display(JkOutput.formatColl(body));
@@ -32,43 +34,25 @@ public class InfoCaller {
     @Test
     public void showRallies() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcRally>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/rallies",
+        ResponseEntity<List<Wrc6Rally>> response = restTemplate.exchange(
+                BASE_URL + "/info/rallies",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcRally>>(){});
-        List<WrcRally> body = response.getBody();
+                new ParameterizedTypeReference<List<Wrc6Rally>>(){});
+        List<Wrc6Rally> body = response.getBody();
         display(response);
         display(response.getBody());
         display(JkOutput.formatColl(body));
     }
 
     @Test
-    public void s() {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity response = restTemplate.getForEntity(
-                "http://localhost:666/wrc/config/c",
-                Object.class);
-        display(response);
-        display(response.getBody());
-
-        ResponseEntity<WrcWeather> response1 = restTemplate.exchange(
-                "http://localhost:666/wrc/config/c",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<WrcWeather>(){});
-        display(response1);
-        display(response1.getBody());
-    }
-
-    @Test
     public void showDrivers() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcDriver>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/drivers",
+        ResponseEntity<List<Wrc6Driver>> response = restTemplate.exchange(
+                BASE_URL + "/info/drivers",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcDriver>>(){});
+                new ParameterizedTypeReference<List<Wrc6Driver>>(){});
         display(response);
         display(response.getBody());
         display(JkOutput.formatColl(response.getBody()));
@@ -77,11 +61,11 @@ public class InfoCaller {
     @Test
     public void showRaceTimes() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcRaceTime>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/raceTimes",
+        ResponseEntity<List<Wrc6RaceTime>> response = restTemplate.exchange(
+                BASE_URL + "/info/raceTimes",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcRaceTime>>(){});
+                new ParameterizedTypeReference<List<Wrc6RaceTime>>(){});
         display(response);
         display(response.getBody());
         display(JkOutput.formatColl(response.getBody()));
@@ -90,11 +74,11 @@ public class InfoCaller {
     @Test
     public void showCountries() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcCountry>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/countries",
+        ResponseEntity<List<Wrc6Country>> response = restTemplate.exchange(
+                BASE_URL + "/info/countries",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcCountry>>(){});
+                new ParameterizedTypeReference<List<Wrc6Country>>(){});
         display(response);
         display(response.getBody());
         display(JkOutput.formatColl(response.getBody()));
@@ -103,11 +87,11 @@ public class InfoCaller {
     @Test
     public void showGroundTypes() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcGroundType>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/surfaces/groundTypes",
+        ResponseEntity<List<Wrc6GroundType>> response = restTemplate.exchange(
+                BASE_URL + "/info/surfaces/groundTypes",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcGroundType>>(){});
+                new ParameterizedTypeReference<List<Wrc6GroundType>>(){});
         display(response);
         display(response.getBody());
         display(JkOutput.formatColl(response.getBody()));
@@ -116,11 +100,11 @@ public class InfoCaller {
     @Test
     public void showWeathers() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcWeather>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/weathers",
+        ResponseEntity<List<Wrc6Weather>> response = restTemplate.exchange(
+                BASE_URL + "/info/weathers",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcWeather>>(){});
+                new ParameterizedTypeReference<List<Wrc6Weather>>(){});
         display(response);
         display(response.getBody());
         display(JkOutput.formatColl(response.getBody()));
@@ -129,24 +113,11 @@ public class InfoCaller {
     @Test
     public void showStages() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcStage>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/stages",
+        ResponseEntity<List<Wrc6Stage>> response = restTemplate.exchange(
+                BASE_URL + "/info/stages",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcStage>>(){});
-        display(response);
-        display(response.getBody());
-        display(JkOutput.formatColl(response.getBody()));
-    }
-
-    @Test
-    public void showSeasons() {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcSeason>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/seasons",
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<WrcSeason>>(){});
+                new ParameterizedTypeReference<List<Wrc6Stage>>(){});
         display(response);
         display(response.getBody());
         display(JkOutput.formatColl(response.getBody()));
@@ -155,11 +126,11 @@ public class InfoCaller {
     @Test
     public void showSurfaces() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcSurface>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/surfaces",
+        ResponseEntity<List<Wrc6Surface>> response = restTemplate.exchange(
+                BASE_URL + "/info/surfaces",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcSurface>>(){}
+                new ParameterizedTypeReference<List<Wrc6Surface>>(){}
         );
         display(response);
         display(response.getBody());
@@ -169,20 +140,12 @@ public class InfoCaller {
     @Test
     public void showMatches() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<WrcMatch>> response = restTemplate.exchange(
-                "http://localhost:666/wrc/info/matches",
+        ResponseEntity<List<Wrc6Match>> response = restTemplate.exchange(
+                BASE_URL + "/info/matches",
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<WrcMatch>>(){}
+                new ParameterizedTypeReference<List<Wrc6Match>>(){}
         );
-        display(response);
-        display(response.getBody());
-        display(JkOutput.formatObject(response.getBody()));
-    }
-    @Test
-    public void showMatch0() {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<WrcMatch> response = restTemplate.getForEntity("http://localhost:666/wrc/info/match0", WrcMatch.class);
         display(response);
         display(response.getBody());
         display(JkOutput.formatObject(response.getBody()));

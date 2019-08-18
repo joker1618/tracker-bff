@@ -1,7 +1,8 @@
 package com.stats.tracker.be.restModel.out;
 
-import com.stats.tracker.be.datalayer.wrc6.entities.WrcCountry;
-import com.stats.tracker.be.datalayer.wrc6.entities.WrcRally;
+import com.stats.tracker.be.datalayer.wrc6.entities.Wrc6Country;
+import com.stats.tracker.be.datalayer.wrc6.entities.Wrc6Rally;
+import com.stats.tracker.be.restModel.out.stats.JsonStat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,8 +18,8 @@ public class JsonSeason implements Serializable {
     private JsonStat totStage;
     private JsonStat totRally;
 
-    private List<WrcCountry> remainingCountries = new ArrayList<>();
-    private WrcRally rallyInProgress;
+    private List<Wrc6Country> remainingCountries = new ArrayList<>();
+    private Wrc6Rally rallyInProgress;
 
 
 
@@ -63,19 +64,19 @@ public class JsonSeason implements Serializable {
         this.totRally = totRally;
     }
 
-    public List<WrcCountry> getRemainingCountries() {
+    public List<Wrc6Country> getRemainingCountries() {
         return remainingCountries;
     }
 
-    public void setRemainingCountries(List<WrcCountry> remainingCountries) {
+    public void setRemainingCountries(List<Wrc6Country> remainingCountries) {
         this.remainingCountries = remainingCountries;
     }
 
-    public WrcRally getRallyInProgress() {
+    public Wrc6Rally getRallyInProgress() {
         return rallyInProgress;
     }
 
-    public void setRallyInProgress(WrcRally rallyInProgress) {
+    public void setRallyInProgress(Wrc6Rally rallyInProgress) {
         this.rallyInProgress = rallyInProgress;
     }
 }
