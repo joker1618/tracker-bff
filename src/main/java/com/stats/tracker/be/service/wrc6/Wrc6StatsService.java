@@ -26,14 +26,6 @@ public class Wrc6StatsService extends AWrc6Service {
         stats.setSeasonWin(countValues("", seasonRepo.getSeasonsClosed(), Wrc6Season::getWinner));
         return stats;
     }
-    public Wrc6StatsSummary computeSeasonStats(Wrc6Season season) {
-        List<Wrc6Match> matches = JkStreams.flatMap(season.getRallies(), Wrc6Rally::getMatches);
-        Wrc6StatsSummary stats = computeStats(matches, season.getRallies());
-        int vf = season.getWinner().equals(driverRepo.getFede()) ? 1 : 0;
-        int vb = season.getWinner().equals(driverRepo.getBomber()) ? 1 : 0;
-        stats.setSeasonWin(new JsonStat("Season win", vf, vb));
-        return stats;
-    }
 
     private Wrc6StatsSummary computeStats(List<Wrc6Match> matches, List<Wrc6Rally> rallies) {
         JsonStat stageWin = createWinsStat("Stage win", matches);
